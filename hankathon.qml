@@ -16,6 +16,10 @@ ApplicationWindow {
 		source: 'fonts/NotoSansCJKtc-Regular.otf';
 	}
 
+	BackgroundShow {
+		anchors.fill: parent;
+	}
+
 	HackTimer {
 		anchors.fill: parent;
 	}
@@ -26,9 +30,5 @@ ApplicationWindow {
 		anchors.right: parent.right;
 		anchors.bottom: parent.bottom;
 
-	}
-
-	BackgroundShow {
-		anchors.fill: parent;
 	}
 }

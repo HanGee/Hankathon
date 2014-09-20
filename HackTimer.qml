@@ -3,6 +3,7 @@ import QtQuick 2.2
 Item {
 
 	property bool heating: false;
+	property var heatingMode: 'freeze';
 	property var expiration: '2014-09-21 18:00:00';
 	property var expirationDate: new Date(expiration);
 	property int hourMS: 60 * 60 * 1000;
@@ -35,10 +36,16 @@ Item {
 
 			if (timerHourDisplay.text || timerMinuteDisplay.text || timerSecondDisplay.text) {
 				if (timerHourDisplay.text != diffHour || timerMinuteDisplay.text != minLabel || timerSecondDisplay.text != secLabel) {
-					heatingAnimation.running = true;;
+					switch(state) {
+					case 'lastMile':
+						heatingMode = 'quick';
+						break;
+
+					default:
+						heatingMode = 'normal';
+					}
 				}
 			}
-
 
 			timerHourDisplay.text = diffHour;
 			timerMinuteDisplay.text = minLabel;
@@ -89,6 +96,7 @@ Item {
 	}
 
 	Text {
+		id: timeLeftLabel;
 		color: '#aaaaaa';
 		text: '剩餘時間';
 		font.pointSize: Math.floor(circle.width * 0.05) || 60;
@@ -193,10 +201,9 @@ Item {
 		text: '秒'
 	}
 
-
 	SequentialAnimation {
 		id: heatingAnimation;
-		running: false;
+		running: (heatingMode == 'normal') ? true : false;
 
 		ParallelAnimation {
 
@@ -237,7 +244,88 @@ Item {
 		}
 	}
 
+	SequentialAnimation {
+		id: quickHeatingAnimation;
+		running: (heatingMode == 'quick') ? true : false;
+
+		ParallelAnimation {
+
+			NumberAnimation {
+				target: circle;
+				property: 'scale';
+				duration: 200;
+				to: 1.1;
+				easing.type: Easing.OutCubic;
+			}
+
+			NumberAnimation {
+				target: circle;
+				property: 'opacity';
+				duration: 200;
+				to: 0;
+				easing.type: Easing.OutCubic;
+			}
+		}
+
+		ParallelAnimation {
+
+			NumberAnimation {
+				target: circle;
+				property: 'scale';
+				duration: 200;
+				to: 1;
+				easing.type: Easing.OutCubic;
+			}
+
+			NumberAnimation {
+				target: circle;
+				property: 'opacity';
+				duration: 200;
+				to: 1;
+				easing.type: Easing.OutCubic;
+			}
+		}
+	}
+
+	states: [
+		State {
+			name: 'lastMile';
+
+			PropertyChanges {
+				target: circle;
+				border.color: '#bb0000';
+			}
+
+			PropertyChanges {
+				target: timeLeftLabel;
+				color: '#cc0000';
+			}
+
+			PropertyChanges {
+				target: timerHourDisplay;
+				color: '#ff0000';
+			}
+
+			PropertyChanges {
+				target: timerMinuteDisplay;
+				color: '#ff0000';
+			}
+
+			PropertyChanges {
+				target: timerSecondDisplay;
+				color: '#ff0000';
+			}
+
+			PropertyChanges {
+				target: timerSpinner;
+				border.color: '#bb0000';
+			}
+		}
+
+	]
+
 	Component.onCompleted: {
 		heating = true;
+		state = 'lastMile';
 	}
 }
