@@ -1,13 +1,18 @@
 import QtQuick 2.2
 
 Item {
+	id: hackTimer;
 
 	property bool heating: false;
 	property var heatingMode: 'freeze';
-	property var expiration: '2014-09-21 18:00:00';
+//	property var expiration: '2014-09-21 18:00:00';
+	property var expiration: '2014-09-20 22:23:30';
 	property var expirationDate: new Date(expiration);
 	property int hourMS: 60 * 60 * 1000;
 	property int minuteMS: 60 * 1000;
+
+	signal ended();
+	signal lastMile();
 
 	Timer {
 		interval: 20;
@@ -19,10 +24,20 @@ Item {
 
 			// Difference
 			var diffMS = expirationDate.getTime() - dateObj.getTime();
+			if (diffMS <= 0) {
+				hackTimer.state = 'end';
+				ended();
+				return;
+			}
 
 			// Hour
 			var diffHour = Math.floor(diffMS / hourMS);
+			var hourLabel = String('00' + parseInt(diffHour).toString()).slice(-2);
 			diffMS -= diffHour * hourMS;
+			if (diffHour <= 0) {
+				hackTimer.state = 'lastMile';
+				lastMile();
+			}
 
 			// Minute
 			var diffMinute = Math.floor(diffMS / minuteMS);
@@ -47,11 +62,21 @@ Item {
 				}
 			}
 
-			timerHourDisplay.text = diffHour;
+			timerHourDisplay.text = hourLabel;
 			timerMinuteDisplay.text = minLabel;
 			timerSecondDisplay.text = secLabel;
 			timerMillisecondDisplay.text = '.' + String('000' + parseInt(diffMS).toString()).slice(-3);
 		}
+	}
+
+	Text {
+		id: endLabel;
+		text: '時間到';
+		color: '#ffffff';
+		font.pointSize: Math.floor(parent.width * 0.2) || 60;
+		anchors.horizontalCenter: parent.horizontalCenter;
+		anchors.verticalCenter: parent.verticalCenter;
+		opacity: 0;
 	}
 
 	Text {
@@ -253,7 +278,7 @@ Item {
 			NumberAnimation {
 				target: circle;
 				property: 'scale';
-				duration: 200;
+				duration: 100;
 				to: 1.1;
 				easing.type: Easing.OutCubic;
 			}
@@ -261,7 +286,7 @@ Item {
 			NumberAnimation {
 				target: circle;
 				property: 'opacity';
-				duration: 200;
+				duration: 100;
 				to: 0;
 				easing.type: Easing.OutCubic;
 			}
@@ -272,7 +297,7 @@ Item {
 			NumberAnimation {
 				target: circle;
 				property: 'scale';
-				duration: 200;
+				duration: 100;
 				to: 1;
 				easing.type: Easing.OutCubic;
 			}
@@ -280,7 +305,7 @@ Item {
 			NumberAnimation {
 				target: circle;
 				property: 'opacity';
-				duration: 200;
+				duration: 100;
 				to: 1;
 				easing.type: Easing.OutCubic;
 			}
@@ -289,11 +314,80 @@ Item {
 
 	states: [
 		State {
+			name: 'end';
+
+			PropertyChanges {
+				target: endLabel;
+				opacity: 1;
+			}
+
+			PropertyChanges {
+				target: hackTimer;
+				heating: false;
+			}
+
+			PropertyChanges {
+				target: circle;
+				visible: false;
+			}
+
+			PropertyChanges {
+				target: timeLeftLabel;
+				visible: false;
+			}
+
+			PropertyChanges {
+				target: timerHourDisplay;
+				visible: false;
+			}
+
+			PropertyChanges {
+				target: timerMinuteDisplay;
+				visible: false;
+			}
+
+			PropertyChanges {
+				target: timerSecondDisplay;
+				visible: false;
+			}
+
+			PropertyChanges {
+				target: timerMillisecondDisplay;
+				visible: false;
+			}
+
+			PropertyChanges {
+				target: timerSpinner;
+				visible: false;
+			}
+
+			PropertyChanges {
+				target: timerHourUnitDisplay;
+				visible: false;
+			}
+
+			PropertyChanges {
+				target: timerMinuteUnitDisplay;
+				visible: false;
+			}
+
+			PropertyChanges {
+				target: timerSecondUnitDisplay;
+				visible: false;
+			}
+		},
+		State {
 			name: 'lastMile';
 
 			PropertyChanges {
 				target: circle;
 				border.color: '#bb0000';
+			}
+
+			PropertyChanges {
+				target: subLevel;
+				anchors.fill: circle;
+				anchors.topMargin: circle.height * 0.3;
 			}
 
 			PropertyChanges {
@@ -304,15 +398,28 @@ Item {
 			PropertyChanges {
 				target: timerHourDisplay;
 				color: '#ff0000';
+				opacity: 0;
+			}
+
+			PropertyChanges {
+				target: timerHourUnitDisplay;
+				visible: false;
 			}
 
 			PropertyChanges {
 				target: timerMinuteDisplay;
 				color: '#ff0000';
+				opacity: 1;
 			}
 
 			PropertyChanges {
 				target: timerSecondDisplay;
+				color: '#ff0000';
+				opacity: 1;
+			}
+
+			PropertyChanges {
+				target: timerMillisecondDisplay;
 				color: '#ff0000';
 			}
 
@@ -326,6 +433,5 @@ Item {
 
 	Component.onCompleted: {
 		heating = true;
-		state = 'lastMile';
 	}
 }

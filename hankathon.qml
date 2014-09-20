@@ -17,11 +17,20 @@ ApplicationWindow {
 	}
 
 	BackgroundShow {
+		id: background;
 		anchors.fill: parent;
 	}
 
 	HackTimer {
 		anchors.fill: parent;
+
+		onEnded: {
+			background.state = 'end';
+		}
+
+		onLastMile: {
+			background.state = 'lastMile';
+		}
 	}
 
 	BrandBubble {
@@ -29,6 +38,5 @@ ApplicationWindow {
 		anchors.left: parent.left;
 		anchors.right: parent.right;
 		anchors.bottom: parent.bottom;
-
 	}
 }

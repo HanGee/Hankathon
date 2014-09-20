@@ -3,32 +3,38 @@ import QtQuick.Particles 2.0
 
 Item {
 
+	Rectangle {
+		id: background;
+		anchors.fill: parent;
+		color: '#000000';
+	}
+
     ParticleSystem { id: sys1 }
     ImageParticle {
         system: sys1
-        source: "qrc:///particleresources/glowdot.png"
-        color: "cyan"
+        source: 'qrc:///particleresources/glowdot.png'
+        color: 'cyan'
         alpha: 0
         SequentialAnimation on color {
             loops: Animation.Infinite
             ColorAnimation {
-                from: "cyan"
-                to: "magenta"
+                from: 'cyan'
+                to: 'magenta'
                 duration: 1000
             }
             ColorAnimation {
-                from: "magenta"
-                to: "blue"
+                from: 'magenta'
+                to: 'blue'
                 duration: 2000
             }
             ColorAnimation {
-                from: "blue"
-                to: "violet"
+                from: 'blue'
+                to: 'violet'
                 duration: 2000
             }
             ColorAnimation {
-                from: "violet"
-                to: "cyan"
+                from: 'violet'
+                to: 'cyan'
                 duration: 2000
             }
         }
@@ -45,7 +51,7 @@ Item {
         y: circlePath.cy
         x: circlePath.cx
 
-        velocity: PointDirection {xVariation: 4; yVariation: 4;}
+        velocity: PointDirection { xVariation: 4; yVariation: 4; }
         acceleration: PointDirection {xVariation: 10; yVariation: 10;}
         velocityFromMovement: 8
 
@@ -55,6 +61,7 @@ Item {
 
     Item {
         id: circlePath
+		property int interval: 1000;
         property real radius: 0
         property real dx: parent.width / 2
         property real dy: parent.height / 2
@@ -67,14 +74,14 @@ Item {
             running: true
 
             NumberAnimation {
-				duration: 1000
+				duration: circlePath.interval;
 				from: 1
 				to: 0
 				loops: 8
             }
 
             NumberAnimation {
-				duration: 1000
+				duration: circlePath.interval;
 				from: 0
 				to: 1
 				loops: 8
@@ -99,4 +106,45 @@ Item {
             }
         }
     }
+
+	FireEffect {
+		id: fireEffect;
+		anchors.fill: parent;
+		anchors.bottomMargin: parent.height * 0.1;
+		visible: false;
+	}
+
+	states: [
+		State {
+			name: 'end';
+
+			PropertyChanges {
+				target: background;
+				color: '#ff0000'
+			}
+
+			PropertyChanges {
+				target: trailsNormal;
+				system: null;
+			}
+
+			PropertyChanges {
+				target: fireEffect;
+				visible: false;
+			}
+		},
+		State {
+			name: 'lastMile';
+
+			PropertyChanges {
+				target: trailsNormal;
+				system: null;
+			}
+
+			PropertyChanges {
+				target: fireEffect;
+				visible: true;
+			}
+		}
+	]
 }
