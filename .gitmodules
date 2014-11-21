@@ -1,0 +1,3 @@
+[submodule "Garlic"]
+	path = Garlic
+	url = git@github.com:cfsghost/Garlic.git

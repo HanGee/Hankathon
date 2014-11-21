@@ -1,4 +1,5 @@
 import QtQuick 2.2
+import QtGraphicalEffects 1.0
 
 Item {
 	id: hackTimer;
@@ -95,7 +96,7 @@ Item {
 		anchors.centerIn: parent;
 		color: '#00000000';
 		border.width: 30;
-		border.color: '#333355';
+		border.color: '#5500ffff';
 	}
 
 	Rectangle {
@@ -144,6 +145,15 @@ Item {
 		horizontalAlignment: Text.AlignHCenter;
 		verticalAlignment: Text.AlignVCenter;
 		smooth: true;
+		visible: false;
+	}
+
+	Glow {
+		anchors.fill: timerHourDisplay;
+		radius: 16
+		samples: 32
+		color: '#ffffff';
+		source: timerHourDisplay;
 	}
 
 	Text {
