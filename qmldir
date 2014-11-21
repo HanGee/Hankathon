@@ -1,0 +1,2 @@
+Circle ./Garlic/components/Circle.qml
+Polygon ./Garlic/components/Polygon.qml

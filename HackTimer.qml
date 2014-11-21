@@ -6,7 +6,9 @@ Item {
 
 	property bool heating: false;
 	property var heatingMode: 'freeze';
-	property var expiration: '2014-11-23 06:28:00';
+	property var durationMS: hourMS * 48;
+	property var leftMS: durationMS;
+	property var expiration: '2014-11-22 18:00:00';
 //	property var expiration: '2014-09-21 18:00:00';
 	property var expirationDate: new Date(expiration);
 	property int hourMS: 60 * 60 * 1000;
@@ -22,9 +24,10 @@ Item {
 
 		onTriggered: {
 			var dateObj = new Date();
+			var curProgress = 1;
 
 			// Difference
-			var diffMS = expirationDate.getTime() - dateObj.getTime();
+			var diffMS = leftMS = expirationDate.getTime() - dateObj.getTime();
 			if (diffMS <= 0) {
 				hackTimer.state = 'end';
 				ended();
@@ -88,15 +91,32 @@ Item {
 		anchors.horizontalCenter: parent.horizontalCenter;
 	}
 
-	Rectangle {
+	Circle {
 		id: circle
 		height: parent.height * 0.7;
 		width: height;
-		radius: width * 0.5;
 		anchors.centerIn: parent;
-		color: '#00000000';
-		border.width: 30;
-		border.color: '#5500ffff';
+		border: 30;
+		color: '#ffffff';
+		opacity: 0.3;
+	}
+
+	Circle {
+		id: progress;
+		height: circle.height * 0.95;
+		width: height;
+		anchors.centerIn: parent;
+		color: '#ffffff';
+		border: 30;
+		angle: 360 * (leftMS / durationMS).toFixed(2);
+		opacity: 0.15;
+
+		Behavior on angle {
+			NumberAnimation {
+				duration: 1000;
+				easing.type: Easing.OutBack;
+			}
+		}
 	}
 
 	Rectangle {
@@ -273,7 +293,7 @@ Item {
 				target: circle;
 				property: 'opacity';
 				duration: 1000;
-				to: 1;
+				to: 0.25;
 				easing.type: Easing.OutCubic;
 			}
 		}
