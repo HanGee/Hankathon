@@ -5,8 +5,8 @@ Item {
 
 	property bool heating: false;
 	property var heatingMode: 'freeze';
+	property var expiration: '2014-11-23 06:28:00';
 //	property var expiration: '2014-09-21 18:00:00';
-	property var expiration: '2014-09-20 22:23:30';
 	property var expirationDate: new Date(expiration);
 	property int hourMS: 60 * 60 * 1000;
 	property int minuteMS: 60 * 1000;
@@ -81,7 +81,7 @@ Item {
 
 	Text {
 		color: '#ffffff';
-		text: 'HanGee x 萌典 x 黑客松';
+		text: 'HanGee 黑客松';
 		font.pointSize: Math.floor(parent.width * 0.03) || 60;
 		opacity: 0.5;
 		anchors.horizontalCenter: parent.horizontalCenter;

@@ -7,6 +7,31 @@ Item {
 		id: background;
 		anchors.fill: parent;
 		color: '#000000';
+
+		Image {
+			anchors.fill: parent;
+			source: './backgrounds/space.jpg';
+			fillMode: Image.PreserveAspectCrop;
+			opacity: 0.5;
+
+			SequentialAnimation on opacity {
+				loops: Animation.Infinite
+				running: true
+
+				NumberAnimation {
+					duration: 10000;
+					from: 0.5
+					to: 0.2
+				}
+
+				NumberAnimation {
+					duration: 10000;
+					from: 0.2
+					to: 0.5
+				}
+
+			}
+		}
 	}
 
     ParticleSystem { id: sys1 }
