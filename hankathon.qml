@@ -1,11 +1,13 @@
 import QtQuick 2.0
 import QtQuick.Controls 1.2
+import QtQuick.Window 2.1
 
 ApplicationWindow {
 	visible: true;
 	color: '#000000';
 	width: 1024;
 	height: 768;
+	visibility: Window.FullScreen;
 
 	FontLoader {
 		id: numberFont;

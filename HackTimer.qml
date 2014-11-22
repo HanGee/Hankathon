@@ -84,11 +84,21 @@ Item {
 	}
 
 	Text {
-		color: '#ffffff';
+		id: title;
+		color: '#00ffff';
 		text: 'HanGee 黑客松';
 		font.pointSize: Math.floor(parent.width * 0.03) || 60;
-		opacity: 0.5;
+		font.weight: Font.DemiBold;
 		anchors.horizontalCenter: parent.horizontalCenter;
+		visible: false;
+	}
+
+	Glow {
+		anchors.fill: title;
+		radius: 8
+		samples: 16
+		color: '#00ffff';
+		source: title;
 	}
 
 	Circle {
