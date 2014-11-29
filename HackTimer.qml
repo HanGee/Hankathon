@@ -179,6 +179,7 @@ Item {
 	}
 
 	Glow {
+		id: timerHourDisplayLayer
 		anchors.fill: timerHourDisplay;
 		radius: 8
 		samples: 16
@@ -377,7 +378,7 @@ Item {
 			}
 
 			PropertyChanges {
-				target: timerHourDisplay;
+				target: timerHourDisplayLayer;
 				visible: false;
 			}
 
@@ -436,7 +437,7 @@ Item {
 			}
 
 			PropertyChanges {
-				target: timerHourDisplay;
+				target: timerHourDisplayLayer;
 				color: '#ff0000';
 				opacity: 0;
 			}
