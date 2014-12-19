@@ -86,7 +86,7 @@ Item {
 	Text {
 		id: title;
 		color: '#00ffff';
-		text: 'HanGee 黑客松';
+		text: 'Hackathon Taiwan 黑客松';
 		font.pointSize: Math.floor(parent.width * 0.03) || 60;
 		font.weight: Font.DemiBold;
 		anchors.horizontalCenter: parent.horizontalCenter;

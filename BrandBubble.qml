@@ -12,6 +12,7 @@ Item {
 	}
 
 	ListView {
+		id: listView;
 		anchors.fill: parent;
 		orientation: ListView.Horizontal;
 		model: ListModel {
@@ -19,13 +20,16 @@ Item {
 				imagePath: './logo/HanGee.jpg';
 			}
 			ListElement {
-				imagePath: './logo/DOITT.png';
+				imagePath: './logo/AvengerGear.jpg';
 			}
 			ListElement {
 				imagePath: './logo/qt.png';
 			}
 			ListElement {
-				imagePath: './logo/nodeschool.png';
+				imagePath: './logo/CustardCream.jpg';
+			}
+			ListElement {
+				imagePath: './logo/TaiwanLD.jpg';
 			}
 		}
 
