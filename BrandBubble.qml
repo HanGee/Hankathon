@@ -2,6 +2,8 @@ import QtQuick 2.2
 
 Item {
 
+	property alias list: listView.model;
+
 	Rectangle {
 		anchors.left: parent.left;
 		anchors.right: parent.right;
@@ -15,23 +17,6 @@ Item {
 		id: listView;
 		anchors.fill: parent;
 		orientation: ListView.Horizontal;
-		model: ListModel {
-			ListElement {
-				imagePath: './logo/HanGee.jpg';
-			}
-			ListElement {
-				imagePath: './logo/AvengerGear.jpg';
-			}
-			ListElement {
-				imagePath: './logo/qt.png';
-			}
-			ListElement {
-				imagePath: './logo/CustardCream.jpg';
-			}
-			ListElement {
-				imagePath: './logo/TaiwanLD.jpg';
-			}
-		}
 
 		delegate: Image {
 			height: parent.height;

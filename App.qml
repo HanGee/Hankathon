@@ -36,9 +36,51 @@ ApplicationWindow {
 	}
 
 	BrandBubble {
-		height: parent.height * 0.1;
+		id: goldBrand
+		height: parent.height * 0.05;
 		anchors.left: parent.left;
 		anchors.right: parent.right;
 		anchors.bottom: parent.bottom;
+
+		list: ListModel {
+			ListElement {
+				imagePath: './logo/netgear.png';
+			}
+			ListElement {
+				imagePath: './logo/vivotek.jpg'
+			}
+			ListElement {
+				imagePath: './logo/pearnature.png'
+			}
+			ListElement {
+				imagePath: './logo/qt.png';
+			}
+		}
+	}
+
+	BrandBubble {
+		id: diamondBrand;
+		height: parent.height * 0.08;
+		anchors.left: parent.left;
+		anchors.right: parent.right;
+		anchors.bottom: goldBrand.top;
+
+		list: ListModel {
+			ListElement {
+				imagePath: './logo/HanGee.jpg';
+			}
+			ListElement {
+				imagePath: './logo/AvengerGear.jpg';
+			}
+			ListElement {
+				imagePath: './logo/CustardCream.jpg';
+			}
+			ListElement {
+				imagePath: './logo/TaiwanLD.jpg';
+			}
+			ListElement {
+				imagePath: './logo/DOITT.png';
+			}
+		}
 	}
 }
