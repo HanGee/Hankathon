@@ -81,6 +81,21 @@ ApplicationWindow {
 		anchors.centerIn: parent;
 
 		Spinner {
+			property int circleSize: parent.height * 0.6;
+
+			width: circleSize;
+			height: circleSize;
+			anchors.centerIn: parent;
+			anchors.margins: width * 0.1;
+			angleMarginFactor: 40;
+			count: 60;
+			border: 10;
+			color: '#00e0d0';
+			duration: 3000;
+			opacity: 0.5;
+		}
+
+		Spinner {
 			property int circleSize: parent.height * 0.68;
 
 			width: circleSize;
@@ -128,13 +143,13 @@ ApplicationWindow {
 			height: circleSize;
 			anchors.centerIn: parent;
 			anchors.margins: width * 0.1;
-			color: '#33bbff';
+			color: '#ffffff';
 			border: 5;
-			opacity: 0.5;
+			opacity: 0.2;
 		}
 
 		Spinner {
-			property int circleSize: parent.height * 0.95;
+			property int circleSize: parent.height * 0.98;
 
 			width: circleSize;
 			height: circleSize;
