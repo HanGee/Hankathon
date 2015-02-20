@@ -7,7 +7,7 @@ ApplicationWindow {
 	color: '#000000';
 	width: 1024;
 	height: 768;
-	visibility: Window.FullScreen;
+//	visibility: Window.FullScreen;
 
 	FontLoader {
 		id: numberFont;

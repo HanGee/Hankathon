@@ -8,7 +8,7 @@ Item {
 	property var heatingMode: 'freeze';
 	property var durationMS: hourMS * 48;
 	property var leftMS: durationMS;
-	property var expiration: '2015-02-01 17:30:00';
+	property var expiration: '2015-02-21 17:30:00';
 //	property var expiration: '2014-09-21 18:00:00';
 	property var expirationDate: new Date(expiration);
 	property int hourMS: 60 * 60 * 1000;
