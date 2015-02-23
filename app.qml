@@ -27,9 +27,19 @@ ApplicationWindow {
 			running: (parent.state == 'normal');
 			repeat: false;
 			onTriggered: {
-				timerPanel.running = true;
+				clock.visible = true;
+//				timerPanel.running = true;
 			}
 		}
+	}
+
+	Clock {
+		id: clock;
+		anchors.centerIn: parent;
+		anchors.margins: parent.width * 0.05;
+		height: parent.height * 0.5;
+		width: height;
+		visible: false;
 	}
 
 	TimerPanel {
@@ -37,7 +47,7 @@ ApplicationWindow {
 		height: parent.height * 0.5;
 		width: height;
 		anchors.centerIn: parent;
-		running: false;
+		running: (clock.state == 'normal');
 	}
 
 	SponsorSlider {
