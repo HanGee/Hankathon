@@ -1,5 +1,6 @@
 import QtQuick 2.3
 import QtQuick.Particles 2.0
+import QtGraphicalEffects 1.0
 
 Item {
 	id: spinner;
@@ -22,6 +23,7 @@ Item {
 		property real angleOffset: 0;
 
 		Circle {
+			id: circleItem;
 			anchors.fill: parent;
 			color: spinner.color;
 			border: spinner.border;
@@ -34,13 +36,26 @@ Item {
 
 				ColorAnimation {
 					duration: spinner.duration;
-					to: 'red';
+					to: '#33bbff';
 				}
 
 				ColorAnimation {
 					duration: spinner.duration;
 					to: spinner.color;
 				}
+			}
+*/
+/*
+			layer.enabled: true;
+			layer.effect: InnerShadow {
+				radius: 8;
+				samples: 16;
+				horizontalOffset: 0;
+				verticalOffset: 0;
+				spread: 0.1;
+				cached: true;
+				color: '#eeffffff';
+				source: circleItem;
 			}
 */
 		}
@@ -75,6 +90,17 @@ Item {
 			}
 		}
 */
+	}
+
+	SequentialAnimation on scale {
+		running: spinner.visible;
+
+		NumberAnimation {
+			duration: spinner.duration / 4;
+			easing.type: Easing.OutBack;
+			from: 0;
+			to: 1;
+		}
 	}
 /*
 	ParticleSystem {
