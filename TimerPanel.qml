@@ -4,15 +4,14 @@ import QtGraphicalEffects 1.0
 
 Item {
 	id: timerPanel;
-	property bool running: true;
+	visible: false;
 
-	visible: running;
+	signal finished();
+	signal timeout();
 
 	Item {
 		id: display;
-		height: parent.height;
-		width: height;
-		anchors.centerIn: parent;
+		anchors.fill: parent;
 /*
 		layer.enabled: true;
 		layer.effect: HueSaturation {
@@ -22,17 +21,32 @@ Item {
 			lightness: 0
 		}
 */
+
+		layer.enabled: false;
+		layer.smooth: true;
+		layer.mipmap: true;
+		layer.effect: Colorize {
+			id: colorizeEffect;
+			cached: true;
+			hue: display.hue;
+			saturation: display.saturation;
+			lightness: display.lightness;
+		}
+
+		property real saturation: 0;
+		property real lightness: 0;
+		property real hue: 0;
+
 		Polygon {
 			id: core;
-			property int circleSize: parent.height * 0.5;
+			property int circleSize: parent.height * 0.6;
 			width: circleSize;
 			height: circleSize;
 			anchors.centerIn: parent;
-			anchors.margins: width * 0.1;
 			color: '#00eedd';
 			edge: 6;
 			edgeOffset: 3;
-			border: 5
+			border: 5;
 			opacity: 0.3;
 
 			transform: Rotation {
@@ -60,7 +74,6 @@ Item {
 			width: circleSize;
 			height: circleSize;
 			anchors.centerIn: parent;
-			anchors.margins: width * 0.1;
 			angleMarginFactor: 40;
 			count: 60;
 			border: circleSize * 0.1;
@@ -75,7 +88,6 @@ Item {
 			width: circleSize;
 			height: circleSize;
 			anchors.centerIn: parent;
-			anchors.margins: width * 0.1;
 			angleMarginFactor: 1;
 			count: 15;
 			border: circleSize * 0.05;
@@ -89,7 +101,6 @@ Item {
 			width: circleSize;
 			height: circleSize;
 			anchors.centerIn: parent;
-			anchors.margins: width * 0.08;
 			color: '#ffffff';
 			angleMarginFactor: 1;
 			count: 3;
@@ -105,7 +116,6 @@ Item {
 			width: circleSize;
 			height: circleSize;
 			anchors.centerIn: parent;
-			anchors.margins: width * 0.1;
 			color: '#ffffff';
 			border: circleSize * 0.01;
 			opacity: 0.1;
@@ -116,7 +126,6 @@ Item {
 			width: circleSize;
 			height: circleSize;
 			anchors.centerIn: parent;
-			anchors.margins: width * 0.1;
 			color: '#55eeff';
 			border: circleSize * 0.1;
 			opacity: 0.2;
@@ -128,7 +137,6 @@ Item {
 			width: circleSize;
 			height: circleSize;
 			anchors.centerIn: parent;
-			anchors.margins: width * 0.1;
 			angleMarginFactor: 1;
 			count: 2;
 			//border: circleSize * 0.04;
@@ -146,7 +154,6 @@ Item {
 			width: circleSize;
 			height: circleSize;
 			anchors.centerIn: parent;
-			anchors.margins: width * 0.1;
 			angleMarginFactor: 0.5;
 			count: 8;
 			border: circleSize * 0.08;
@@ -163,7 +170,6 @@ Item {
 			width: circleSize;
 			height: circleSize;
 			anchors.centerIn: parent;
-			anchors.margins: width * 0.1;
 
 			color: '#11bbff';
 			border: circleSize * 0.05;
@@ -202,7 +208,6 @@ Item {
 			width: circleSize;
 			height: circleSize;
 			anchors.centerIn: parent;
-			anchors.margins: width * 0.1;
 			angleMarginFactor: 1;
 			count: 2;
 			border: circleSize * 0.07;
@@ -224,7 +229,7 @@ Item {
 
 		ParticleSystem {
 			id: sys1
-			running: timerPanel.running;
+			running: timerPanel.visible;
 		}
 
 		ImageParticle {
@@ -276,12 +281,12 @@ Item {
 			size: 4;
 			sizeVariation: 8
 
-			enabled: timerPanel.running;
+			enabled: timerPanel.visible;
 		}
 
 		Item {
 			id: circlePath
-			property int circleSize: parent.height * 0.5 - 130;
+			property int circleSize: parent.height * 0.1;
 			property int interval: 800;
 			property real radius: circleSize * 0.5;
 			property real dx: parent.width / 2
@@ -292,7 +297,7 @@ Item {
 
 			SequentialAnimation on percent {
 				loops: Animation.Infinite
-				running: timerPanel.running;
+				running: timerPanel.visible;
 
 				NumberAnimation {
 					duration: circlePath.interval;
@@ -309,7 +314,7 @@ Item {
 		anchors.fill: parent;
 //		visible: false;
 
-		property real baseSize: parent.height * 0.2 || 200;
+		property real baseSize: Math.floor(parent.height * 0.2) || 200;
 /*
 		layer.enabled: true;
 		layer.effect: Glow {
@@ -322,78 +327,74 @@ Item {
 			source: textStyle;
 		}
 */
-		Text {
-			anchors.margins: 20;
-			anchors.bottom: hour.top;
-			anchors.horizontalCenter: hour.horizontalCenter;
-			font.pointSize: textStyle.baseSize * 0.15;
-			font.family: numberFont.name;
-			font.bold: true;
-			color: '#ffffff';
-			horizontalAlignment: Text.AlignHCenter;
-			verticalAlignment: Text.AlignVCenter;
-			smooth: true;
-			visible: true;
-			text: '剩餘時間';
-		}
 
-		Text {
-			id: hour;
+		Item {
+			id: textDisplay
 			anchors.centerIn: parent;
-			font.pointSize: textStyle.baseSize;
-			font.family: numberFont.name;
-			font.bold: true;
-			color: '#55eeff';
-			horizontalAlignment: Text.AlignHCenter;
-			verticalAlignment: Text.AlignVCenter;
-			smooth: true;
-			visible: true;
-			text: timer.hour;
-		}
 
-		Text {
-			id: minute;
-			anchors.top: hour.bottom;
-			anchors.right: hour.horizontalCenter;
-			anchors.margins: 5;
-			font.pointSize: textStyle.baseSize * 0.25;
-			font.family: numberFont.name;
-			font.bold: true;
-			color: '#ffffff';
-			horizontalAlignment: Text.AlignHCenter;
-			verticalAlignment: Text.AlignVCenter;
-			smooth: true;
-			visible: true;
-			text: timer.minute;
-		}
+			Text {
+				anchors.margins: textStyle.baseSize * 0.1;
+				anchors.bottom: hour.top;
+				anchors.horizontalCenter: hour.horizontalCenter;
+				font.pointSize: textStyle.baseSize * 0.15;
+				font.family: numberFont.name;
+	//			font.bold: true;
+				color: '#ffffff';
+				horizontalAlignment: Text.AlignHCenter;
+				verticalAlignment: Text.AlignVCenter;
+				text: '剩餘時間';
+			}
 
-		Text {
-			anchors.top: hour.bottom;
-			anchors.left: hour.horizontalCenter;
-			anchors.margins: 5;
-			font.pointSize: textStyle.baseSize * 0.25;
-			font.family: numberFont.name;
-			font.bold: true;
-			color: '#ffffff';
-			horizontalAlignment: Text.AlignHCenter;
-			verticalAlignment: Text.AlignVCenter;
-			smooth: true;
-			visible: true;
-			text: timer.second;
-		}
+			Text {
+				id: hour;
+				anchors.centerIn: parent;
+				font.pointSize: textStyle.baseSize;
+				font.family: numberFont.name;
+				font.bold: true;
+				color: '#55eeff';
+				horizontalAlignment: Text.AlignHCenter;
+				verticalAlignment: Text.AlignVCenter;
+				text: timer.hour;
+			}
 
-		Text {
-			anchors.top: minute.bottom;
-			anchors.horizontalCenter: hour.horizontalCenter;
-			font.pointSize: textStyle.baseSize * 0.15;
-			font.family: numberFont.name;
-			font.bold: true;
-			color: '#ffffff';
-			horizontalAlignment: Text.AlignHCenter;
-			verticalAlignment: Text.AlignVCenter;
-			smooth: true;
-			visible: true;
-			text: timer.millisecond;
+			Text {
+				id: minute;
+				anchors.top: hour.bottom;
+				anchors.right: hour.horizontalCenter;
+				anchors.margins: textStyle.baseSize * 0.05;
+				font.pointSize: textStyle.baseSize * 0.25;
+				font.family: numberFont.name;
+	//			font.bold: true;
+				color: '#ffffff';
+				horizontalAlignment: Text.AlignHCenter;
+				verticalAlignment: Text.AlignVCenter;
+				text: timer.minute;
+			}
+
+			Text {
+				anchors.top: hour.bottom;
+				anchors.left: hour.horizontalCenter;
+				anchors.margins: textStyle.baseSize * 0.05;
+				font.pointSize: textStyle.baseSize * 0.25;
+				font.family: numberFont.name;
+	//			font.bold: true;
+				color: '#ffffff';
+				horizontalAlignment: Text.AlignHCenter;
+				verticalAlignment: Text.AlignVCenter;
+				text: timer.second;
+			}
+
+			Text {
+				anchors.top: minute.bottom;
+				anchors.horizontalCenter: hour.horizontalCenter;
+				font.pointSize: textStyle.baseSize * 0.15;
+				font.family: numberFont.name;
+	//			font.bold: true;
+				color: '#ffffff';
+				horizontalAlignment: Text.AlignHCenter;
+				verticalAlignment: Text.AlignVCenter;
+				text: timer.millisecond;
+			}
 		}
 
 		SequentialAnimation on scale {
@@ -417,10 +418,145 @@ Item {
 				to: 1;
 			}
 		}
+
+		// Display Time's up
+		Item {
+			anchors.fill: parent;
+			visible: (timerPanel.state == 'timesup')
+
+			Text {
+				id: timerPanelTitle;
+				anchors.centerIn: parent;
+				font.pointSize: textStyle.baseSize * 0.8;
+				font.family: numberFont.name;
+				font.bold: true;
+				color: '#ffffff';
+				horizontalAlignment: Text.AlignHCenter;
+				verticalAlignment: Text.AlignVCenter;
+				text: '時間到';
+			}
+
+			Text {
+				anchors.top: timerPanelTitle.bottom;
+				anchors.horizontalCenter: timerPanelTitle.horizontalCenter;
+				font.pointSize: textStyle.baseSize * 0.3;
+				font.family: numberFont.name;
+				font.bold: true;
+				color: '#ffffff';
+				horizontalAlignment: Text.AlignHCenter;
+				verticalAlignment: Text.AlignVCenter;
+				text: 'Time\'s Up';
+			}
+		}
+	}
+
+	Timer {
+		interval: 1000;
+		running: timerPanel.visible;
+		repeat: false;
+		onTriggered: {
+			finished();
+			trailsNormal.enabled = false;
+		}
+	}
+
+	Behavior on width {
+
+		NumberAnimation {
+			duration: 800;
+			easing.type: Easing.OutCubic;
+		}
+	}
+
+	Behavior on height {
+
+		NumberAnimation {
+			duration: 800;
+			easing.type: Easing.OutCubic;
+		}
+	}
+
+	Behavior on opacity {
+
+		NumberAnimation {
+			duration: 400;
+			easing.type: Easing.OutCubic;
+		}
 	}
 
 	CountdownTimer {
 		id: timer;
 		running: timerPanel.visible;
+		onLastHour: {
+			hour.color = '#ff5555';
+			display.hue = 0.0;
+			display.saturation = 1;
+			display.lightness = 0.1;
+			display.layer.enabled = true;
+		}
+
+		onTimeout: {
+			hour.color = '#ff5555';
+			display.hue = 0.0;
+			display.saturation = 1;
+			display.lightness = 0.1;
+			display.layer.enabled = true;
+			trailsNormal.enabled = false;
+			timerPanel.timeout();
+		}
+	}
+
+	states: [
+		State {
+			name: 'normal';
+
+			ParentChange {
+				target: timerPanel;
+				parent: timerPanel.parent;
+			}
+
+			AnchorChanges {
+				target: timerPanel;
+				anchors.top: clock.bottom
+				anchors.left: clock.left
+				anchors.horizontalCenter: undefined;
+				anchors.verticalCenter: undefined;
+			}
+		},
+		State {
+			name: 'hide';
+
+			PropertyChanges {
+				target: timerPanel;
+				opacity: 0;
+			}
+		},
+		State {
+			name: 'timesup';
+
+			PropertyChanges {
+				target: display;
+				opacity: 0;
+			}
+
+			PropertyChanges {
+				target: textDisplay;
+				opacity: 0;
+			}
+
+			AnchorChanges {
+				target: timerPanel;
+				anchors.top: undefined;
+				anchors.left: undefined;
+			}
+		}
+	]
+
+	transitions: Transition {
+
+		AnchorAnimation {
+			duration: 600;
+			easing.type: Easing.OutCubic;
+		}
 	}
 }

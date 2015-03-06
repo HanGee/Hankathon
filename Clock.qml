@@ -8,6 +8,8 @@ Item {
 	property var minute: '00';
 	property var second: '00';
 
+	signal finished();
+
 	Item {
 		anchors.fill: parent;
 		property real baseSize: parent.height;
@@ -73,7 +75,7 @@ Item {
 			border: parent.baseSize * 0.1;
 			color: '#00ffff';
 			opacity: 0.8;
-			duration: 5000;
+			duration: 8000;
 			from: 360;
 			to: 0;
 		}
@@ -135,14 +137,13 @@ Item {
 		id: textStyle;
 		anchors.fill: parent;
 
-		property real baseSize: parent.height * 0.2 || 200;
+		property real baseSize: Math.floor(parent.height * 0.2) || 200;
 
 		Text {
 			id: sep;
 			anchors.centerIn: parent;
 			font.pointSize: textStyle.baseSize * 0.8;
 			font.family: numberFont.name;
-			font.bold: true;
 			color: '#ffffff';
 			text: ':';
 		}
@@ -172,13 +173,12 @@ Item {
 			anchors.horizontalCenter: sep.horizontalCenter;
 			font.pointSize: textStyle.baseSize * 0.5;
 			font.family: numberFont.name;
-			font.bold: true;
 			color: '#ffffff';
 			text: second;
 		}
 
 		SequentialAnimation on scale {
-			running: timerPanel.visible;
+			running: clock.visible;
 
 			NumberAnimation {
 				duration: 1000;
@@ -189,7 +189,7 @@ Item {
 		}
 
 		SequentialAnimation on opacity {
-			running: timerPanel.visible;
+			running: clock.visible;
 
 			NumberAnimation {
 				duration: 1000;
@@ -213,23 +213,11 @@ Item {
 	}
 
 	Timer {
-		interval: 2000;
+		interval: 1500;
 		running: clock.visible;
 		repeat: false;
 		onTriggered: {
-			clock.width *= 0.3;
-			clock.height *= 0.3;
-//			clock.scale = 0.3;
-			clock.anchors.centerIn = undefined;
-			clock.state = 'normal';
-		}
-	}
-
-	Behavior on scale {
-
-		NumberAnimation {
-			duration: 1000;
-			easing.type: Easing.OutBack;
+			finished();
 		}
 	}
 
@@ -266,8 +254,8 @@ Item {
 		SequentialAnimation {
 
 			AnchorAnimation {
-				duration: 800;
-				easing.type: Easing.OutBack;
+				duration: 600;
+				easing.type: Easing.OutCubic;
 			}
 		}
 	}
