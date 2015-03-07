@@ -22,10 +22,12 @@ ApplicationWindow {
 			switch(event.key) {
 			case Qt.Key_Left:
 				timerPanel.state = 'focus';
+				//timerPanel.setFocus();
 				break;
 
 			case Qt.Key_Right:
 				timerPanel.state = 'minimize';
+				//timerPanel.minimize();
 				break;
 			}
 		}
@@ -113,15 +115,16 @@ ApplicationWindow {
 */
 			timerPanel.anchors.centerIn = undefined;
 			timerPanel.state = 'minimize';
+			timerPanel.minimize();
 			console.log('11');
 		}
 		onTimeout: {
-			timerPanel.width = parent.height * 0.5;
-			timerPanel.height = timerPanel.width;
+//			timerPanel.width = parent.height * 0.5;
+//			timerPanel.height = timerPanel.width;
 			timerPanel.anchors.centerIn = parent;
-			messageBox.color = '#11ff1111';
+			messageBox.color = '#55ff1111';
 			timerPanel.state = 'timesup';
-			console.log('TIMESUP');
+//			console.log('TIMESUP');
 		}
 
 		states: [
@@ -137,13 +140,13 @@ ApplicationWindow {
 			},
 			State {
 				name: 'focus';
-
+/*
 				PropertyChanges {
 					target: timerPanel;
 					width: timerPanel.baseSize;
 					height: timerPanel.baseSize;
 				}
-
+*/
 				AnchorChanges {
 					target: timerPanel;
 					anchors.top: undefined;
@@ -151,8 +154,21 @@ ApplicationWindow {
 					anchors.horizontalCenter: timerPanel.parent.horizontalCenter;
 					anchors.verticalCenter: timerPanel.parent.verticalCenter;
 				}
+			},
+			State {
+				name: 'timesup';
 			}
 		]
+
+		function minimize() {
+			this.width = this.baseSize * 0.4;
+			this.height = this.baseSize * 0.4;
+		}
+
+		function setFocus() {
+			this.width = this.baseSize;
+			this.height = this.baseSize;
+		}
 	}
 /*
 	Social {

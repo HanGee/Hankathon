@@ -3,7 +3,7 @@ import QtQuick 2.3
 Item {
 
 	property alias running: timer.running;
-	property var expiration: '2015-03-04 21:40:00';
+	property var expiration: '2015-03-08 17:00:00';
 	property var expirationDate: new Date(expiration);
 	property var expirationTime: expirationDate.getTime();
 	property int hourMS: 60 * 60 * 1000;

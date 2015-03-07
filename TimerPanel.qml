@@ -433,7 +433,7 @@ Item {
 				color: '#ffffff';
 				horizontalAlignment: Text.AlignHCenter;
 				verticalAlignment: Text.AlignVCenter;
-				text: '時間到';
+				text: 'Time\'s Up';
 			}
 
 			Text {
@@ -445,7 +445,7 @@ Item {
 				color: '#ffffff';
 				horizontalAlignment: Text.AlignHCenter;
 				verticalAlignment: Text.AlignVCenter;
-				text: 'Time\'s Up';
+				text: '時間到';
 			}
 		}
 	}
