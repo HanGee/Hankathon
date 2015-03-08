@@ -10,7 +10,7 @@ import Qt3D.Shapes 2.0
 ApplicationWindow {
 	id: app;
 	visible: true;
-	color: '#bb000000';
+	color: '#dd000000';
 	width: 1024;
 	height: 768;
 //	visibility: Window.FullScreen;
@@ -122,7 +122,7 @@ ApplicationWindow {
 //			timerPanel.width = parent.height * 0.5;
 //			timerPanel.height = timerPanel.width;
 			timerPanel.anchors.centerIn = parent;
-			messageBox.color = '#55ff1111';
+			messageBox.color = '#33ff1111';
 			timerPanel.state = 'timesup';
 //			console.log('TIMESUP');
 		}
@@ -175,6 +175,7 @@ ApplicationWindow {
 		anchors.fill: parent;		
 	}
 */
+/*
 	SponsorSlider {
 		anchors.left: parent.left;
 		anchors.right: parent.right;
@@ -199,6 +200,7 @@ ApplicationWindow {
 			}
 		}
 	}
+*/
 /*
 	SponsorSlider {
 		anchors.left: parent.left;
@@ -222,4 +224,43 @@ ApplicationWindow {
 		}
 	}
 */
+
+	signal updatedIRC(var msg);
+
+	Rectangle {
+		id: irc;
+		color: '#07ffffff';
+		anchors.margins: 10;
+		anchors.bottom: parent.bottom;
+		anchors.left: parent.left;
+		width: parent.width * 0.4;
+		height: parent.height * 0.4;
+		radius: 10;
+
+		Text {
+			id: ircBox;
+			color: '#f0ffffff';	
+			style: Text.Outline;
+			styleColor: '#33ffffff';
+			wrapMode: Text.WordWrap;
+			font.pointSize: 10;
+			textFormat: Text.RichText;
+			text: 'Initializing ...';
+		}
+	}
+
+	Text {
+		anchors.margins: 10;
+		anchors.left: irc.right;
+		anchors.bottom: irc.bottom;
+		font.pointSize: 16;
+		font.family: numberFont.name;
+		textFormat: Text.RichText;
+		color: '#22bbff';
+		text: '<b>IRC Channel</b><br><br>#HackathonTaiwan5th @ freenode<br>http://bit.ly/1Ns8fxw'
+	}
+
+	onUpdatedIRC: {
+		ircBox.text = msg;
+	}
 }
