@@ -37,14 +37,14 @@ brig.on('ready', function(brig) {
 	brig.open('app.qml', function(err, window) {
 
 		var names = {};
-		var ircMsg = [];
-		ircMsg.length = 13;
 
 		var channelName = '#HackathonTaiwan5th';
 		var stream = net.connect({
 			port: 6667,
 			host: 'irc.freenode.org'
 		});
+
+		window.emit('updatedIRC', 'Connecting IRC Server...');
 
 		var client = irc(stream);
 
@@ -54,14 +54,13 @@ brig.on('ready', function(brig) {
 
 		client.on('welcome', function(msg) {
 			console.log('Connected IRC server');
-			ircMsg.push('Connected IRC server');
+			window.emit('updatedIRC', 'Connected Server');
 		});
 
 		client.on('notice', function(msg) {
 			console.log(msg.message);
 
-			ircMsg.shift();
-			ircMsg.push(msg.message);
+			window.emit('updatedIRC', msg.message);
 		});
 
 		client.on('message', function(e) {
@@ -79,8 +78,7 @@ brig.on('ready', function(brig) {
 			}
 			var msgRich = '&lt; <font color="' + color + '">' + e.from + '</font> &gt; ' + e.message;
 
-			ircMsg.shift();
-			ircMsg.push(msgRich);
+			window.emit('updatedIRC', msgRich);
 		});
 
 		client.on('join', function(msg) {
@@ -99,9 +97,10 @@ brig.on('ready', function(brig) {
 				names[name] = getUserColor();
 			}
 		});
-
+/*
 		setInterval(function() {
 			window.emit('updatedIRC', ircMsg.join('<br>'));
 		}, 800);
+*/
 	});
 });

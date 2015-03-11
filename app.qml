@@ -229,7 +229,7 @@ ApplicationWindow {
 
 	Rectangle {
 		id: irc;
-		color: '#07ffffff';
+		color: '#0affffff';
 		anchors.margins: 10;
 		anchors.bottom: parent.bottom;
 		anchors.left: parent.left;
@@ -237,16 +237,37 @@ ApplicationWindow {
 		height: parent.height * 0.4;
 		radius: 10;
 
+		ListView {
+			id: ircBox;
+			anchors.fill: parent;
+			anchors.margins: 10;
+			model: ListModel {}
+			delegate: Item {
+				height: label.height;
+
+				Text {
+					id: label;
+					width: ircBox.width;
+					color: '#f0ffffff';	
+					font.pointSize: 10;
+					wrapMode: Text.Wrap;
+					textFormat: Text.RichText;
+					text: msg;
+				}
+			}
+		}
+/*
 		Text {
 			id: ircBox;
 			color: '#f0ffffff';	
-			style: Text.Outline;
-			styleColor: '#33ffffff';
+//			style: Text.Outline;
+//			styleColor: '#33ffffff';
 			wrapMode: Text.WordWrap;
 			font.pointSize: 10;
 			textFormat: Text.RichText;
 			text: 'Initializing ...';
 		}
+*/
 	}
 
 	Text {
@@ -261,6 +282,10 @@ ApplicationWindow {
 	}
 
 	onUpdatedIRC: {
-		ircBox.text = msg;
+//		ircBox.text = msg;
+		ircBox.model.append({
+			msg: msg
+		});
+		ircBox.positionViewAtEnd();
 	}
 }
