@@ -31,7 +31,7 @@ Item {
 		Behavior on scale {
 
 			NumberAnimation {
-				duration: 1000;
+				duration: 600;
 				easing.type: Easing.OutBack;
 			}
 		}
@@ -117,7 +117,7 @@ Item {
 		SequentialAnimation {
 
 			AnchorAnimation {
-				duration: 800;
+				duration: 600;
 				easing.type: Easing.OutBack;
 			}
 		}
