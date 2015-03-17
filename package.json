@@ -1,0 +1,27 @@
+{
+  "name": "Hankathon",
+  "version": "1.0.0",
+  "description": "Countdown Timer for hackathon",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/HanGee/Hankathon.git"
+  },
+  "keywords": [
+    "timer",
+    "hackathon"
+  ],
+  "author": "Fred Chien <cfsghost@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/HanGee/Hankathon/issues"
+  },
+  "homepage": "https://github.com/HanGee/Hankathon",
+  "dependencies": {
+    "brig": "^0.1.0",
+    "slate-irc": "^0.8.1"
+  }
+}
