@@ -29,6 +29,10 @@ ApplicationWindow {
 				timerPanel.state = 'minimize';
 				//timerPanel.minimize();
 				break;
+
+			case Qt.Key_F:
+				app.visibility = Window.FullScreen;
+				break;
 			}
 		}
 	}
