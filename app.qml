@@ -240,6 +240,8 @@ ApplicationWindow {
 		width: parent.width * 0.4;
 		height: parent.height * 0.4;
 		radius: 10;
+		border.width: 2;
+		border.color: '#20ffffff';
 
 		ListView {
 			id: ircBox;
