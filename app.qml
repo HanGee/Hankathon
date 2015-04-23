@@ -277,13 +277,15 @@ ApplicationWindow {
 	}
 
 	Text {
+		id: ircInfo
 		anchors.margins: 10;
 		anchors.left: irc.right;
 		anchors.bottom: irc.bottom;
 		font.pointSize: 16;
 		font.family: numberFont.name;
 		textFormat: Text.RichText;
-		color: '#22bbff';
+		//color: '#22bbff';
+		color: '#ffaa22';
 		text: '<b>IRC Channel</b><br><br>#HackathonTaiwan5th @ freenode<br>http://bit.ly/1Ns8fxw'
 	}
 
