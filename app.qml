@@ -237,11 +237,12 @@ ApplicationWindow {
 		anchors.margins: 10;
 		anchors.bottom: parent.bottom;
 		anchors.left: parent.left;
-		width: parent.width * 0.4;
-		height: parent.height * 0.4;
+		width: 0;
+		height: 50;
 		radius: 10;
 		border.width: 2;
 		border.color: '#20ffffff';
+		opacity: 0;
 
 		layer.enabled: true;
 		layer.effect: Glow {
@@ -279,11 +280,10 @@ ApplicationWindow {
 
 				NumberAnimation {
 					target: irc;
-					property: 'height';
-					duration: 1000;
+					property: 'width';
+					duration: 600;
 					easing.type: Easing.OutBack;
-					from: 0;
-					to: app.height * 0.4;
+					to: app.height * 0.3;
 				}
 
 				NumberAnimation {
@@ -291,18 +291,45 @@ ApplicationWindow {
 					property: 'opacity';
 					duration: 600;
 					easing.type: Easing.Linear;
-					from: 0;
 					to: 1;
 				}
 			}
 
 			NumberAnimation {
 				target: irc;
-				property: 'width';
-				duration: 1000;
+				property: 'height';
+				duration: 500;
 				easing.type: Easing.OutBack;
-				from: 200;
+				to: app.height * 0.4;
+			}
+
+			NumberAnimation {
+				target: irc;
+				property: 'width';
+				duration: 600;
+				easing.type: Easing.OutBack;
 				to: app.width * 0.4;
+			}
+
+			ParallelAnimation {
+
+				NumberAnimation {
+					target: ircInfo;
+					property: 'x';
+					duration: 600;
+					easing.type: Easing.OutCubic;
+					from: 200;
+					to: 0;
+				}
+
+				NumberAnimation {
+					target: ircInfo;
+					property: 'opacity';
+					duration: 600;
+					easing.type: Easing.Linear;
+					from: 0;
+					to: 1;
+				}
 			}
 		}
 	}
@@ -322,6 +349,7 @@ ApplicationWindow {
 			//color: '#ffaa22';
 			color: '#ffffff';
 			text: '<b>IRC Channel</b><br><br>#HackathonTaiwan @ freenode<br>http://bit.ly/1Ns8fxw'
+			opacity: 0;
 
 			layer.enabled: true;
 			layer.effect: Glow {
@@ -331,7 +359,7 @@ ApplicationWindow {
 				cached: true;
 				color: '#33aaff';
 			}
-
+/*
 			SequentialAnimation {
 				running: true
 
@@ -356,6 +384,7 @@ ApplicationWindow {
 					}
 				}
 			}
+*/
 		}
 	}
 
