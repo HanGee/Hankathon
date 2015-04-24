@@ -1,4 +1,5 @@
 import QtQuick 2.3
+import QtGraphicalEffects 1.0
 
 Item {
 	id: clock;
@@ -21,8 +22,10 @@ Item {
 			angleMarginFactor: 30;
 			count: 60;
 			border: parent.baseSize * 0.05;
-			color: '#aaeeff';
-			opacity: 0.5;
+			//color: '#aaeeff';
+			color: '#ee1111';
+			//opacity: 0.5;
+			opacity: 0.8;
 			duration: 5000;
 		}
 
@@ -31,9 +34,11 @@ Item {
 			height: width;
 			anchors.centerIn: parent;
 
-			color: '#11bbff';
+			//color: '#11bbff';
+			color: '#ff1111';
 			border: parent.baseSize * 0.1;
-			opacity: 0.5;
+			//opacity: 0.5;
+			opacity: 0.7;
 			useGradient: true;
 
 			SequentialAnimation on scale {
@@ -61,7 +66,8 @@ Item {
 			angleMarginFactor: 0.5;
 			count: 10;
 			border: parent.baseSize * 0.016;
-			color: '#55ddff';
+			//color: '#55ddff';
+			color: '#ff5555';
 			opacity: 0.5;
 			duration: 3000;
 		}
@@ -70,25 +76,31 @@ Item {
 			width: parent.baseSize * 0.8;
 			height: width;
 			anchors.centerIn: parent;
-			angleMarginFactor: 1;
-			count: 12;
+			//angleMarginFactor: 1;
+			//count: 12;
+			angleMarginFactor: 30;
+			count: 60;
 			border: parent.baseSize * 0.1;
-			color: '#00ffff';
-			opacity: 0.8;
+			//color: '#00ffff';
+			//color: '#eecc55';
+			color: '#ffcc00';
+			opacity: 0.9;
 			duration: 8000;
 			from: 360;
 			to: 0;
 		}
 
 		Circle {
-			width: parent.baseSize * 0.85;
+			width: parent.baseSize * 0.84;
 			height: width;
 			anchors.centerIn: parent;
 
-			color: '#11bbff';
-			border: parent.baseSize * 0.1;
-			opacity: 0.5;
-			useGradient: true;
+			//color: '#11bbff';
+			color: '#cc2200';
+			border: parent.baseSize * 0.01;
+			//opacity: 0.5;
+			opacity: 0.7;
+//			useGradient: true;
 
 			SequentialAnimation on scale {
 				running: clock.visible;
@@ -115,8 +127,11 @@ Item {
 			angleMarginFactor: 1.2;
 			count: 2;
 			border: parent.baseSize * 0.02;
-			color: '#ffffff';
-			opacity: 0.4;
+			//color: '#ffffff';
+			//color: '#ffcc00';
+			color: '#eecc55';
+			//opacity: 1;
+			opacity: 1;
 			duration: 1500;
 		}
 
@@ -125,9 +140,11 @@ Item {
 			height: width;
 			anchors.centerIn: parent;
 			angleMarginFactor: 1;
-			count: 2;
-			border: parent.baseSize * 0.03;
-			color: '#ffffff';
+			count: 3;
+			border: parent.baseSize * 0.02;
+			//color: '#ffffff';
+			color: '#ffaa00';
+			//opacity: 0.2;
 			opacity: 0.2;
 			duration: 2000;
 		}
