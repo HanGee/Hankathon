@@ -38,7 +38,7 @@ brig.on('ready', function(brig) {
 
 		var names = {};
 
-		var channelName = '#HackathonTaiwan5th';
+		var channelName = '#HackathonTaiwan';
 		var stream = net.connect({
 			port: 6667,
 			host: 'irc.freenode.org'

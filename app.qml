@@ -286,7 +286,7 @@ ApplicationWindow {
 		textFormat: Text.RichText;
 		//color: '#22bbff';
 		color: '#ffaa22';
-		text: '<b>IRC Channel</b><br><br>#HackathonTaiwan5th @ freenode<br>http://bit.ly/1Ns8fxw'
+		text: '<b>IRC Channel</b><br><br>#HackathonTaiwan @ freenode<br>http://bit.ly/1Ns8fxw'
 	}
 
 	onUpdatedIRC: {
