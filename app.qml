@@ -295,6 +295,15 @@ ApplicationWindow {
 					to: 1;
 				}
 			}
+
+			NumberAnimation {
+				target: irc;
+				property: 'width';
+				duration: 1000;
+				easing.type: Easing.OutBack;
+				from: 200;
+				to: app.width * 0.4;
+			}
 		}
 	}
 
@@ -310,8 +319,18 @@ ApplicationWindow {
 			font.family: numberFont.name;
 			textFormat: Text.RichText;
 			//color: '#22bbff';
-			color: '#ffaa22';
+			//color: '#ffaa22';
+			color: '#ffffff';
 			text: '<b>IRC Channel</b><br><br>#HackathonTaiwan @ freenode<br>http://bit.ly/1Ns8fxw'
+
+			layer.enabled: true;
+			layer.effect: Glow {
+				radius: 4;
+				samples: 16;
+				spread: 0.1;
+				cached: true;
+				color: '#33aaff';
+			}
 
 			SequentialAnimation {
 				running: true
