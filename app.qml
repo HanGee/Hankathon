@@ -243,6 +243,15 @@ ApplicationWindow {
 		border.width: 2;
 		border.color: '#20ffffff';
 
+		layer.enabled: true;
+		layer.effect: Glow {
+			radius: 4;
+			samples: 16;
+			spread: 0.1;
+			cached: true;
+			color: '#33aaff';
+		}
+
 		ListView {
 			id: ircBox;
 			anchors.fill: parent;
@@ -254,7 +263,7 @@ ApplicationWindow {
 				Text {
 					id: label;
 					width: ircBox.width;
-					color: '#f0ffffff';	
+					color: '#ffffff';	
 					font.pointSize: 10;
 					wrapMode: Text.Wrap;
 					textFormat: Text.RichText;
@@ -262,31 +271,73 @@ ApplicationWindow {
 				}
 			}
 		}
-/*
-		Text {
-			id: ircBox;
-			color: '#f0ffffff';	
-//			style: Text.Outline;
-//			styleColor: '#33ffffff';
-			wrapMode: Text.WordWrap;
-			font.pointSize: 10;
-			textFormat: Text.RichText;
-			text: 'Initializing ...';
+
+		SequentialAnimation {
+			running: true
+
+			ParallelAnimation {
+
+				NumberAnimation {
+					target: irc;
+					property: 'height';
+					duration: 1000;
+					easing.type: Easing.OutBack;
+					from: 0;
+					to: app.height * 0.4;
+				}
+
+				NumberAnimation {
+					target: irc;
+					property: 'opacity';
+					duration: 600;
+					easing.type: Easing.Linear;
+					from: 0;
+					to: 1;
+				}
+			}
 		}
-*/
 	}
 
-	Text {
-		id: ircInfo
+	Item {
 		anchors.margins: 10;
 		anchors.left: irc.right;
 		anchors.bottom: irc.bottom;
-		font.pointSize: 16;
-		font.family: numberFont.name;
-		textFormat: Text.RichText;
-		//color: '#22bbff';
-		color: '#ffaa22';
-		text: '<b>IRC Channel</b><br><br>#HackathonTaiwan @ freenode<br>http://bit.ly/1Ns8fxw'
+
+		Text {
+			id: ircInfo
+			anchors.bottom: parent.bottom;
+			font.pointSize: 16;
+			font.family: numberFont.name;
+			textFormat: Text.RichText;
+			//color: '#22bbff';
+			color: '#ffaa22';
+			text: '<b>IRC Channel</b><br><br>#HackathonTaiwan @ freenode<br>http://bit.ly/1Ns8fxw'
+
+			SequentialAnimation {
+				running: true
+
+				ParallelAnimation {
+
+					NumberAnimation {
+						target: ircInfo;
+						property: 'x';
+						duration: 600;
+						easing.type: Easing.OutCubic;
+						from: 200;
+						to: 0;
+					}
+
+					NumberAnimation {
+						target: ircInfo;
+						property: 'opacity';
+						duration: 600;
+						easing.type: Easing.Linear;
+						from: 0;
+						to: 1;
+					}
+				}
+			}
+		}
 	}
 
 	onUpdatedIRC: {
