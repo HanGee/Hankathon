@@ -269,6 +269,31 @@ ApplicationWindow {
 					wrapMode: Text.Wrap;
 					textFormat: Text.RichText;
 					text: msg;
+
+					SequentialAnimation {
+						running: true
+
+						ParallelAnimation {
+
+							NumberAnimation {
+								target: label;
+								property: 'x';
+								duration: 300;
+								easing.type: Easing.OutBack;
+								from: 20;
+								to: 0;
+							}
+
+							NumberAnimation {
+								target: label;
+								property: 'opacity';
+								duration: 300;
+								easing.type: Easing.Linear;
+								from: 0;
+								to: 1;
+							}
+						}
+					}
 				}
 			}
 		}
@@ -348,7 +373,7 @@ ApplicationWindow {
 			//color: '#22bbff';
 			//color: '#ffaa22';
 			color: '#ffffff';
-			text: '<b>IRC Channel</b><br><br>#HackathonTaiwan @ freenode<br>http://bit.ly/1Ns8fxw'
+			text: '<b>IRC Channel</b><br><br>#HackathonTaiwan @ freenode<br>http://goo.gl/eoGTUZ'
 			opacity: 0;
 
 			layer.enabled: true;
