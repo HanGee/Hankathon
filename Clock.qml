@@ -83,6 +83,7 @@ Item {
 			border: parent.baseSize * 0.1;
 			//color: '#00ffff';
 			//color: '#eecc55';
+			//color: '#ffcc00';
 			color: '#ffcc00';
 			opacity: 0.9;
 			duration: 8000;
@@ -155,6 +156,15 @@ Item {
 		anchors.fill: parent;
 
 		property real baseSize: Math.floor(parent.height * 0.2) || 200;
+
+		layer.enabled: true;
+		layer.effect: Glow {
+			radius: 4;
+			samples: 16;
+			spread: 0.1;
+			cached: true;
+			color: '#ffaa00';
+		}
 
 		Text {
 			id: sep;
