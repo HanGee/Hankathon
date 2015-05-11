@@ -38,64 +38,67 @@ brig.on('ready', function(brig) {
 
 		var names = {};
 
-		var channelName = '#HackathonTaiwan';
-		var stream = net.connect({
-			port: 6667,
-			host: 'irc.freenode.org'
-		});
+		window.on('readyForIRC', function() {
 
-		window.emit('updatedIRC', 'Connecting IRC Server...');
+			var channelName = '#HackathonTaiwan';
+			var stream = net.connect({
+				port: 6667,
+				host: 'irc.freenode.org'
+			});
 
-		var client = irc(stream);
+			window.emit('updatedIRC', 'Connecting IRC Server...');
 
-		client.nick('HackathonTaiwan');
-		client.user('HackathonTaiwan', 'Hackathon Taiwan');
-		client.join(channelName);
+			var client = irc(stream);
 
-		client.on('welcome', function(msg) {
-			console.log('Connected IRC server');
-			window.emit('updatedIRC', 'Connected Server');
-		});
+			client.nick('HackathonTaiwan');
+			client.user('HackathonTaiwan', 'Hackathon Taiwan');
+			client.join(channelName);
 
-		client.on('notice', function(msg) {
-			console.log(msg.message);
+			client.on('welcome', function(msg) {
+				console.log('Connected IRC server');
+				window.emit('updatedIRC', 'Connected Server');
+			});
 
-			window.emit('updatedIRC', msg.message);
-		});
+			client.on('notice', function(msg) {
+				console.log(msg.message);
 
-		client.on('message', function(e) {
+				window.emit('updatedIRC', msg.message);
+			});
 
-			if (e.to != channelName.toLowerCase()) 
-				return;
+			client.on('message', function(e) {
 
-			var msg = e.from + ': ' + e.message;
-			console.log(msg);
+				if (e.to != channelName.toLowerCase()) 
+					return;
 
-			var color = names[e.from];
-			if (!color) {
-				color = getUserColor();
-				names[e.from] = color;
-			}
-			var msgRich = '&lt; <font color="' + color + '">' + e.from + '</font> &gt; ' + e.message;
+				var msg = e.from + ': ' + e.message;
+				console.log(msg);
 
-			window.emit('updatedIRC', msgRich);
-		});
+				var color = names[e.from];
+				if (!color) {
+					color = getUserColor();
+					names[e.from] = color;
+				}
+				var msgRich = '&lt; <font color="' + color + '">' + e.from + '</font> &gt; ' + e.message;
 
-		client.on('join', function(msg) {
+				window.emit('updatedIRC', msgRich);
+			});
 
-			if (Object.keys(names).length == 0)
-				return;
+			client.on('join', function(msg) {
 
-			names[msg.nick] = getUserColor();
-		});
+				if (Object.keys(names).length == 0)
+					return;
 
-		client.names(channelName, function(err, list) {
+				names[msg.nick] = getUserColor();
+			});
 
-			for (var index in list) {
-				var name = list[index].name;
+			client.names(channelName, function(err, list) {
 
-				names[name] = getUserColor();
-			}
+				for (var index in list) {
+					var name = list[index].name;
+
+					names[name] = getUserColor();
+				}
+			});
 		});
 /*
 		setInterval(function() {

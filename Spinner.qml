@@ -15,6 +15,7 @@ Item {
 
 	property real unitAngle: 360 / spinner.count;
 	property real angleMarginFactor: 0;
+	property bool initialAnimation: true;
 
 	Item {
 		id: circle;
@@ -93,7 +94,7 @@ Item {
 	}
 
 	SequentialAnimation on scale {
-		running: spinner.visible;
+		running: spinner.visible && spinner.initialAnimation;
 
 		NumberAnimation {
 			duration: spinner.duration / 4;

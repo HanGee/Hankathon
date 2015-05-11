@@ -3,6 +3,7 @@ import QtGraphicalEffects 1.0
 
 Item {
 	id: logo;
+	visible: true;
 
 	anchors.margins: 20;
 
@@ -37,7 +38,7 @@ Item {
 		}
 
 		SequentialAnimation {
-			running: true
+			running: logo.visible;
 
 			ParallelAnimation {
 
@@ -89,7 +90,7 @@ Item {
 
 	Timer {
 		interval: 2000;
-		running: true;
+		running: logo.visible;
 		repeat: false;
 		onTriggered: {
 			effect.visible = false;

@@ -2,6 +2,7 @@ import QtQuick 2.3
 import QtQuick.Controls 1.2
 import QtQuick.Window 2.1
 import QtGraphicalEffects 1.0
+import QtQuick.Particles 2.0
 //import 'slides/social'
 /*
 import Qt3D 2.0
@@ -15,6 +16,8 @@ ApplicationWindow {
 	height: 768;
 //	visibility: Window.FullScreen;
 	title: 'Hankathon';
+
+	signal readyForIRC();
 
 	Item {
 		focus: true;
@@ -32,6 +35,10 @@ ApplicationWindow {
 
 			case Qt.Key_F:
 				app.visibility = Window.FullScreen;
+				break;
+
+			case Qt.Key_G:
+				logo.visible = true;
 				break;
 			}
 		}
@@ -71,9 +78,11 @@ ApplicationWindow {
 */
 
 	Logo {
+		id: logo;
 		anchors.centerIn: parent;
 		width: parent.width * 0.15;
 		height: parent.height * 0.15;
+		visible: false;
 
 		onFinished: {
 		}
@@ -84,6 +93,233 @@ ApplicationWindow {
 			repeat: false;
 			onTriggered: {
 				clock.visible = true;
+				app.readyForIRC();
+			}
+		}
+	}
+
+	Item {
+		id: core;
+		property int circleSize: parent.height * 0.2;
+
+		width: circleSize;
+		height: circleSize;
+		anchors.bottom: parent.bottom;
+		anchors.right: parent.right;
+		anchors.bottomMargin: parent.height * 0.05;
+		anchors.rightMargin: parent.width * 0.05;
+		visible: (clock.state == 'normal');
+
+		Spinner {
+			width: parent.circleSize;
+			height: parent.circleSize;
+			color: '#ffffff';
+			border: parent.circleSize * 0.3;
+			opacity: 0.1;
+			angleMarginFactor: 30;
+			count: 60;
+			duration: 10000;
+			from: 0;
+			to: 360;
+			easingType: Easing.OutInBounce;
+		}
+
+		Spinner {
+			width: parent.circleSize;
+			height: parent.circleSize;
+			color: '#ffffff';
+			border: parent.circleSize;
+			opacity: 0.1;
+			angleMarginFactor: 1;
+			count: 2;
+			duration: 10000;
+			from: 0;
+			to: 360;
+			easingType: Easing.InOutBounce;
+		}
+
+		Circle {
+			width: parent.circleSize * 0.95;
+			height: parent.circleSize * 0.95;
+			color: '#ffffff';
+			border: parent.circleSize * 0.01;
+			anchors.centerIn: parent;
+			opacity: 0.2;
+
+			layer.enabled: true;
+			layer.effect: Glow {
+				radius: 4;
+				samples: 16;
+				spread: 0.1;
+				cached: true;
+				color: '#33aaff';
+			}
+		}
+
+		Circle {
+			width: parent.circleSize * 0.9;
+			height: parent.circleSize * 0.9;
+			color: '#ffffff';
+			border: parent.circleSize * 0.01;
+			anchors.centerIn: parent;
+			opacity: 0.5;
+
+			layer.enabled: true;
+			layer.effect: Glow {
+				radius: 4;
+				samples: 16;
+				spread: 0.1;
+				cached: true;
+				color: '#33aaff';
+			}
+		}
+
+		Item {
+			id: triangle1;
+			property int objSize: parent.circleSize * 0.75;
+			width: objSize;
+			height: objSize;
+			anchors.centerIn: parent;
+
+			Polygon {
+				width: parent.width;
+				height: parent.height;
+				anchors.centerIn: parent;
+				color: '#ffffff';
+				edge: 3;
+				border: 5;
+				opacity: 0.3;
+
+				transform: Rotation {
+					origin.x: triangle1.width * 0.5;
+					origin.y: triangle1.height * 0.5;
+					axis { x: 0; y: 1; z: 1 }
+					angle: 45;
+
+					SequentialAnimation on angle {
+						loops: Animation.Infinite
+						running: core.visible;
+
+						NumberAnimation {
+							duration: 2000;
+							easing.type: Easing.Linear;
+							from: 0;
+							to: 360;
+						}
+					}
+
+				}
+			}
+
+			Polygon {
+				width: parent.width;
+				height: parent.height;
+				anchors.centerIn: parent;
+				color: '#ffffff';
+				edge: 3;
+				border: 5;
+				opacity: 0.3;
+
+				transform: Rotation {
+					origin.x: triangle1.width * 0.5;
+					origin.y: triangle1.height * 0.5;
+					axis { x: 0; y: 1; z: 1 }
+					angle: 45;
+
+					SequentialAnimation on angle {
+						loops: Animation.Infinite
+						running: core.visible;
+
+						NumberAnimation {
+							duration: 2000;
+							easing.type: Easing.Linear;
+							from: 90;
+							to: 450;
+						}
+					}
+
+				}
+			}
+		}
+
+		ParticleSystem {
+			id: sys1
+			running: core.visible;
+		}
+
+		ImageParticle {
+			system: sys1
+			source: 'qrc:///particleresources/glowdot.png'
+			color: 'cyan'
+			alpha: 0
+			SequentialAnimation on color {
+				loops: Animation.Infinite
+				ColorAnimation {
+					from: 'cyan'
+					to: 'magenta'
+					duration: 2000
+				}
+				ColorAnimation {
+					from: 'magenta'
+					to: 'blue'
+					duration: 1000
+				}
+				ColorAnimation {
+					from: 'blue'
+					to: 'violet'
+					duration: 2000
+				}
+				ColorAnimation {
+					from: 'violet'
+					to: 'cyan'
+					duration: 2000
+				}
+
+			}
+			colorVariation: 0.3
+		}
+
+		Emitter {
+			id: trailsNormal
+			system: sys1
+
+			emitRate: 500
+			lifeSpan: 1500
+
+			y: circlePath.cy
+			x: circlePath.cx
+
+			velocity: PointDirection { xVariation: 4; yVariation: 4; }
+			acceleration: PointDirection {xVariation: 10; yVariation: 10;}
+			velocityFromMovement: 0.1
+
+			size: 4;
+			sizeVariation: 8
+
+			enabled: true;
+		}
+
+		Item {
+			id: circlePath
+			property int circleSize: parent.height * 0.5;
+			property int interval: 800;
+			property real radius: circleSize * 0.3;
+			property real dx: parent.width / 2
+			property real dy: parent.height / 2
+			property real cx: radius * Math.sin(percent * 6.283185307179) + dx
+			property real cy: radius * Math.cos(percent * 6.283185307179) + dy
+			property real percent: 0
+
+			SequentialAnimation on percent {
+				loops: Animation.Infinite
+				running: core.visible;
+
+				NumberAnimation {
+					duration: circlePath.interval;
+					from: 360;
+					to: 0
+					loops: 8
+				}
 			}
 		}
 	}
@@ -172,6 +408,213 @@ ApplicationWindow {
 		function setFocus() {
 			this.width = this.baseSize;
 			this.height = this.baseSize;
+		}
+	}
+
+	Item {
+		anchors.fill: parent;
+		visible: core.visible;
+
+		NumberAnimation on opacity {
+			running: core.visible;
+			duration: 2000;
+			easing.type: Easing.OutCubic;
+			from: 0;
+			to: 1;
+		}
+
+		Spinner {
+			property int circleSize: parent.height * 0.5;
+			width: circleSize;
+			height: circleSize;
+			anchors.centerIn: parent;
+			anchors.horizontalCenterOffset: circleSize * 0.8;
+			anchors.verticalCenterOffset: -circleSize * 0.8;
+			color: '#ffffff';
+			border: circleSize * 0.02;
+			opacity: 0.2;
+
+			angleMarginFactor: 1;
+			count: 3;
+			duration: 4000;
+			from: 360;
+			to: 0;
+			easingType: Easing.OutQuad;
+		}
+
+		Circle {
+			property int circleSize: parent.height * 0.5;
+			width: circleSize;
+			height: circleSize;
+			anchors.centerIn: parent;
+			anchors.horizontalCenterOffset: circleSize * 0.8;
+			anchors.verticalCenterOffset: -circleSize * 0.8;
+			color: '#ffffff';
+			border: circleSize * 0.005;
+			opacity: 0.2;
+		}
+
+		Circle {
+			id: centerCircle;
+			property int circleSize: parent.height * 0.75;
+			width: circleSize;
+			height: circleSize;
+			anchors.centerIn: parent;
+			color: '#ffffff';
+			border: circleSize * 0.005;
+			opacity: 0.2;
+			scale: 2;
+
+			transform: Rotation {
+				origin.x: centerCircle.width * 0.5;
+				origin.y: centerCircle.height * 0.5;
+				axis { x: 0; y: 1; z: 0 }
+				angle: 90;
+
+				SequentialAnimation on angle {
+					running: core.visible
+
+					NumberAnimation {
+						duration: 2500;
+						easing.type: Easing.OutCubic;
+						to: 0;
+					}
+				}
+			}
+
+			SequentialAnimation on scale {
+				running: core.visible;
+
+				NumberAnimation {
+					duration: 2000;
+					easing.type: Easing.OutBack;
+					to: 1;
+				}
+			}
+
+			Circle {
+				property int circleSize: parent.height * 0.98;
+				width: circleSize;
+				height: circleSize;
+				anchors.centerIn: parent;
+				color: '#ffffff';
+				border: circleSize * 0.005;
+
+				layer.enabled: true;
+				layer.effect: Glow {
+					radius: 4;
+					samples: 16;
+					spread: 0.1;
+					cached: true;
+					color: '#33aaff';
+				}
+			}
+		}
+
+		Spinner {
+			id: spinner1;
+			property int circleSize: parent.height * 0.7;
+			width: circleSize;
+			height: circleSize;
+			anchors.centerIn: parent;
+			color: '#ffffff';
+			border: circleSize * 0.1;
+			opacity: 0.1;
+			angleMarginFactor: 9.5;
+			count: 10;
+			duration: 15000;
+			from: 0;
+			to: 360;
+			easingType: Easing.OutInBounce;
+			initialAnimation: false;
+
+			transform: Rotation {
+				origin.x: spinner1.width * 0.5;
+				origin.y: spinner1.height * 0.5;
+				axis { x: 0; y: 1; z: 0 }
+				angle: 90;
+
+				SequentialAnimation on angle {
+					running: core.visible;
+
+
+					NumberAnimation {
+						duration: 2000;
+						easing.type: Easing.OutCubic;
+						to: 0;
+					}
+				}
+			}
+		}
+
+		Spinner {
+			id: spinner2;
+			property int circleSize: parent.height * 0.65;
+			width: circleSize;
+			height: circleSize;
+			anchors.centerIn: parent;
+			color: '#ffffff';
+			border: circleSize * 0.07;
+			opacity: 0.1;
+			angleMarginFactor: 45;
+			count: 60;
+			duration: 15000;
+			from: 9;
+			to: 369;
+			easingType: Easing.OutInBounce;
+			initialAnimation: false;
+
+			transform: Rotation {
+				origin.x: spinner2.width * 0.5;
+				origin.y: spinner2.height * 0.5;
+				axis { x: 0; y: 1; z: 0 }
+				angle: 90;
+
+				SequentialAnimation on angle {
+					running: core.visible;
+
+					NumberAnimation {
+						duration: 2000;
+						easing.type: Easing.OutCubic;
+						to: 0;
+					}
+				}
+			}
+		}
+
+		Spinner {
+			id: spinner3;
+			property int circleSize: parent.height * 0.60;
+			width: circleSize;
+			height: circleSize;
+			anchors.centerIn: parent;
+			color: '#ffffff';
+			border: circleSize * 0.03;
+			opacity: 0.1;
+			angleMarginFactor: 45;
+			count: 60;
+			duration: 15000;
+			from: 6;
+			to: 366;
+			easingType: Easing.OutInBounce;
+			initialAnimation: false;
+
+			transform: Rotation {
+				origin.x: spinner3.width * 0.5;
+				origin.y: spinner3.height * 0.5;
+				axis { x: 0; y: 1; z: 0 }
+				angle: 90;
+
+				SequentialAnimation on angle {
+					running: core.visible;
+
+					NumberAnimation {
+						duration: 2000;
+						easing.type: Easing.OutCubic;
+						to: 0;
+					}
+				}
+			}
 		}
 	}
 /*
@@ -299,7 +742,7 @@ ApplicationWindow {
 		}
 
 		SequentialAnimation {
-			running: true
+			running: clock.visible
 
 			ParallelAnimation {
 
@@ -344,7 +787,7 @@ ApplicationWindow {
 					duration: 600;
 					easing.type: Easing.OutCubic;
 					from: 200;
-					to: 0;
+					to: 10;
 				}
 
 				NumberAnimation {
@@ -355,17 +798,27 @@ ApplicationWindow {
 					from: 0;
 					to: 1;
 				}
+
+				NumberAnimation {
+					target: ircBoxLabel;
+					property: 'opacity';
+					duration: 500;
+					easing.type: Easing.OutInBounce;
+					from: 0;
+					to: 1;
+					loops: 1;
+				}
 			}
 		}
 	}
 
 	Item {
-		anchors.margins: 10;
 		anchors.left: irc.right;
 		anchors.bottom: irc.bottom;
 
 		Text {
 			id: ircInfo
+			anchors.margins: 10;
 			anchors.bottom: parent.bottom;
 			font.pointSize: 16;
 			font.family: numberFont.name;
@@ -373,7 +826,7 @@ ApplicationWindow {
 			//color: '#22bbff';
 			//color: '#ffaa22';
 			color: '#ffffff';
-			text: '<b>IRC Channel</b><br><br>#HackathonTaiwan @ freenode<br>http://goo.gl/eoGTUZ'
+			text: '#HackathonTaiwan @ freenode<br>http://goo.gl/eoGTUZ'
 			opacity: 0;
 
 			layer.enabled: true;
@@ -384,32 +837,44 @@ ApplicationWindow {
 				cached: true;
 				color: '#33aaff';
 			}
-/*
-			SequentialAnimation {
-				running: true
+		}
 
-				ParallelAnimation {
+		Rectangle {
+			id: ircBoxLabel;
+			width: labelText.width + 30; 
+			height: labelText.height + 10; 
+			anchors.bottom: ircInfo.top;
+			anchors.margins: 10;
+			color: '#aaf0ffff';
+			opacity: 0;
 
-					NumberAnimation {
-						target: ircInfo;
-						property: 'x';
-						duration: 600;
-						easing.type: Easing.OutCubic;
-						from: 200;
-						to: 0;
-					}
+			layer.enabled: true;
+			layer.effect: Glow {
+				radius: 3;
+				samples: 16;
+				spread: 0.1;
+				cached: true;
+				color: '#33aaff';
+			}
 
-					NumberAnimation {
-						target: ircInfo;
-						property: 'opacity';
-						duration: 600;
-						easing.type: Easing.Linear;
-						from: 0;
-						to: 1;
-					}
+			Text {
+				anchors.centerIn: parent;
+				id: labelText;
+				font.pointSize: 16;
+				font.family: numberFont.name;
+				textFormat: Text.RichText;
+				color: '#000000';
+				text: '<b>IRC Channel</b>'
+
+				layer.enabled: true;
+				layer.effect: Glow {
+					radius: 3;
+					samples: 16;
+					spread: 0.1;
+					cached: true;
+					color: '#ffffff';
 				}
 			}
-*/
 		}
 	}
 
