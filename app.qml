@@ -356,7 +356,6 @@ ApplicationWindow {
 			timerPanel.anchors.centerIn = undefined;
 			timerPanel.state = 'minimize';
 			timerPanel.minimize();
-			console.log('11');
 		}
 		onTimeout: {
 //			timerPanel.width = parent.height * 0.5;
