@@ -1,5 +1,4 @@
 import QtQuick 2.3
-import QtQuick.Particles 2.0
 import QtGraphicalEffects 1.0
 
 Item {
@@ -225,87 +224,6 @@ Item {
 				source: shield;
 			}
 */
-		}
-
-		ParticleSystem {
-			id: sys1
-			running: timerPanel.visible;
-		}
-
-		ImageParticle {
-			system: sys1
-			source: 'qrc:///particleresources/glowdot.png'
-			color: 'cyan'
-			alpha: 0
-			SequentialAnimation on color {
-				loops: Animation.Infinite
-				ColorAnimation {
-					from: 'cyan'
-					to: 'magenta'
-					duration: 2000
-				}
-				ColorAnimation {
-					from: 'magenta'
-					to: 'blue'
-					duration: 1000
-				}
-				ColorAnimation {
-					from: 'blue'
-					to: 'violet'
-					duration: 2000
-				}
-				ColorAnimation {
-					from: 'violet'
-					to: 'cyan'
-					duration: 2000
-				}
-
-			}
-			colorVariation: 0.3
-		}
-
-		Emitter {
-			id: trailsNormal
-			system: sys1
-
-			emitRate: 500
-			lifeSpan: 1500
-
-			y: circlePath.cy
-			x: circlePath.cx
-
-			velocity: PointDirection { xVariation: 4; yVariation: 4; }
-			acceleration: PointDirection {xVariation: 10; yVariation: 10;}
-			velocityFromMovement: 0.1
-
-			size: 4;
-			sizeVariation: 8
-
-			enabled: timerPanel.visible;
-		}
-
-		Item {
-			id: circlePath
-			property int circleSize: parent.height * 0.1;
-			property int interval: 800;
-			property real radius: circleSize * 0.5;
-			property real dx: parent.width / 2
-			property real dy: parent.height / 2
-			property real cx: radius * Math.sin(percent * 6.283185307179) + dx
-			property real cy: radius * Math.cos(percent * 6.283185307179) + dy
-			property real percent: 0
-
-			SequentialAnimation on percent {
-				loops: Animation.Infinite
-				running: timerPanel.visible;
-
-				NumberAnimation {
-					duration: circlePath.interval;
-					from: 360;
-					to: 0
-					loops: 8
-				}
-			}
 		}
 	}
 

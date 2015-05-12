@@ -246,12 +246,12 @@ ApplicationWindow {
 		}
 
 		ParticleSystem {
-			id: sys1
+			id: coreSystem
 			running: true;
 		}
 
 		ImageParticle {
-			system: sys1
+			system: coreSystem
 			source: 'qrc:///particleresources/glowdot.png'
 			color: 'cyan'
 			alpha: 0
@@ -283,14 +283,13 @@ ApplicationWindow {
 		}
 
 		Emitter {
-			id: trailsNormal
-			system: sys1
+			system: coreSystem;
 
 			emitRate: 500
 			lifeSpan: 1500
 
-			y: circlePath.cy
-			x: circlePath.cx
+			y: corePath.cy
+			x: corePath.cx
 
 			velocity: PointDirection { xVariation: 4; yVariation: 4; }
 			acceleration: PointDirection {xVariation: 10; yVariation: 10;}
@@ -302,9 +301,8 @@ ApplicationWindow {
 		}
 
 		Item {
-			id: circlePath
+			id: corePath;
 			property int circleSize: parent.height * 0.5;
-			property int interval: 800;
 			property real radius: circleSize * 0.3;
 			property real dx: parent.width / 2
 			property real dy: parent.height / 2
@@ -314,10 +312,11 @@ ApplicationWindow {
 
 			SequentialAnimation on percent {
 				loops: Animation.Infinite
-				running: core.visible;
+				//running: core.visible;
+				running: true;
 
 				NumberAnimation {
-					duration: circlePath.interval;
+					duration: 800;
 					from: 360;
 					to: 0
 					loops: 8
