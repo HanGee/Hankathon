@@ -24,13 +24,14 @@ ApplicationWindow {
 		Keys.onPressed: {
 			switch(event.key) {
 			case Qt.Key_Left:
-				timerPanel.state = 'focus';
-				//timerPanel.setFocus();
+//				timerPanel.state = 'focus';
+				timerPanel.setFocus();
 				break;
 
 			case Qt.Key_Right:
-				timerPanel.state = 'minimize';
-				//timerPanel.minimize();
+//				timerPanel.state = 'minimize';
+				timerPanel.anchors.centerIn = undefined;
+				timerPanel.minimize();
 				break;
 
 			case Qt.Key_F:
@@ -334,14 +335,19 @@ ApplicationWindow {
 
 	Clock {
 		id: clock;
+		property int baseSize: parent.height * 0.5;
 		anchors.centerIn: parent;
 		anchors.margins: parent.width * 0.05;
 		height: parent.height * 0.5;
 		width: height;
 		visible: false;
 		onFinished: {
-			clock.width *= 0.4;
-			clock.height *= 0.4;
+			clock.width = Qt.binding(function() {
+				return clock.baseSize * 0.4;
+			});
+			clock.height = Qt.binding(function() {
+				return clock.baseSize * 0.4;
+			});
 			clock.anchors.centerIn = undefined;
 			clock.state = 'normal';
 		}
@@ -357,21 +363,15 @@ ApplicationWindow {
 		onFinished: {
 			if (timerPanel.state)
 				return;
-/*
-			timerPanel.width *= 0.4;
-			timerPanel.height *= 0.4;
-*/
-			timerPanel.anchors.centerIn = undefined;
-			timerPanel.state = 'minimize';
-			timerPanel.minimize();
+
+			//timerPanel.anchors.centerIn = undefined;
+			//timerPanel.minimize();
 		}
 		onTimeout: {
-//			timerPanel.width = parent.height * 0.5;
-//			timerPanel.height = timerPanel.width;
 			timerPanel.anchors.centerIn = parent;
 			messageBox.color = '#33ff1111';
+			timerPanel.setFocus();
 			timerPanel.state = 'timesup';
-//			console.log('TIMESUP');
 		}
 
 		states: [
@@ -384,16 +384,17 @@ ApplicationWindow {
 					width: timerPanel.baseSize * 0.4;
 					height: timerPanel.baseSize * 0.4;
 				}
+
 			},
 			State {
 				name: 'focus';
-/*
+
 				PropertyChanges {
 					target: timerPanel;
 					width: timerPanel.baseSize;
 					height: timerPanel.baseSize;
 				}
-*/
+
 				AnchorChanges {
 					target: timerPanel;
 					anchors.top: undefined;
@@ -408,13 +409,11 @@ ApplicationWindow {
 		]
 
 		function minimize() {
-			this.width = this.baseSize * 0.4;
-			this.height = this.baseSize * 0.4;
+			timerPanel.state = 'minimize';
 		}
 
 		function setFocus() {
-			this.width = this.baseSize;
-			this.height = this.baseSize;
+			timerPanel.state = 'focus';
 		}
 	}
 
