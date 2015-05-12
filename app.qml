@@ -34,7 +34,10 @@ ApplicationWindow {
 				break;
 
 			case Qt.Key_F:
-				app.visibility = Window.FullScreen;
+				if (app.visibility != Window.FullScreen)
+					app.visibility = Window.FullScreen;
+				else
+					app.visibility = Window.Windowed;
 				break;
 
 			case Qt.Key_G:
