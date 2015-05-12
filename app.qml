@@ -247,7 +247,7 @@ ApplicationWindow {
 
 		ParticleSystem {
 			id: sys1
-			running: core.visible;
+			running: true;
 		}
 
 		ImageParticle {
@@ -298,7 +298,6 @@ ApplicationWindow {
 
 			size: 4;
 			sizeVariation: 8
-
 			enabled: true;
 		}
 
