@@ -34,7 +34,7 @@ brig.on('ready', function(brig) {
 		return color;
 	}
 
-	brig.open('app.qml', function(err, window) {
+	brig.open('App.qml', function(err, window) {
 
 		var names = {};
 
@@ -100,10 +100,5 @@ brig.on('ready', function(brig) {
 				}
 			});
 		});
-/*
-		setInterval(function() {
-			window.emit('updatedIRC', ircMsg.join('<br>'));
-		}, 800);
-*/
 	});
 });
