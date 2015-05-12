@@ -374,7 +374,6 @@ Item {
 		repeat: false;
 		onTriggered: {
 			finished();
-			trailsNormal.enabled = false;
 		}
 	}
 

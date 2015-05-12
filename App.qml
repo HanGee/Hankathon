@@ -113,6 +113,14 @@ ApplicationWindow {
 		anchors.rightMargin: parent.width * 0.05;
 		visible: (clock.state == 'normal');
 
+		NumberAnimation on opacity {
+			running: core.visible;
+			duration: 500;
+			easing.type: Easing.OutInBounce;
+			from: 0;
+			to: 1;
+		}
+
 		Spinner {
 			width: parent.circleSize;
 			height: parent.circleSize;
@@ -247,7 +255,7 @@ ApplicationWindow {
 
 		ParticleSystem {
 			id: coreSystem
-			running: true;
+			running: core.visible;
 		}
 
 		ImageParticle {
@@ -297,7 +305,7 @@ ApplicationWindow {
 
 			size: 4;
 			sizeVariation: 8
-			enabled: true;
+			enabled: coreSystem.running;
 		}
 
 		Item {
@@ -312,8 +320,7 @@ ApplicationWindow {
 
 			SequentialAnimation on percent {
 				loops: Animation.Infinite
-				//running: core.visible;
-				running: true;
+				running: core.visible;
 
 				NumberAnimation {
 					duration: 800;
