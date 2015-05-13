@@ -418,7 +418,6 @@ Item {
 			display.saturation = 1;
 			display.lightness = 0.1;
 			display.layer.enabled = true;
-			trailsNormal.enabled = false;
 			timerPanel.timeout();
 		}
 	}
