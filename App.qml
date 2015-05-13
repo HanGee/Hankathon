@@ -256,7 +256,7 @@ ApplicationWindow {
 
 		ParticleSystem {
 			id: coreSystem
-			running: core.visible;
+			running: true;
 		}
 
 		ImageParticle {
