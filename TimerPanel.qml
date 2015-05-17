@@ -249,6 +249,7 @@ Item {
 		Item {
 			id: textDisplay
 			anchors.centerIn: parent;
+			property var message: '剩餘時間';
 
 			Text {
 				anchors.margins: textStyle.baseSize * 0.1;
@@ -260,7 +261,7 @@ Item {
 				color: '#ffffff';
 				horizontalAlignment: Text.AlignHCenter;
 				verticalAlignment: Text.AlignVCenter;
-				text: '剩餘時間';
+				text: textDisplay.message;
 			}
 
 			Text {
@@ -410,6 +411,7 @@ Item {
 			display.saturation = 1;
 			display.lightness = 0.1;
 			display.layer.enabled = true;
+			textDisplay.message = '最後一個小時 last Hour';
 		}
 
 		onTimeout: {
