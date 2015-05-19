@@ -230,7 +230,6 @@ Item {
 	Item {
 		id: textStyle;
 		anchors.fill: parent;
-//		visible: false;
 
 		property real baseSize: Math.floor(parent.height * 0.2) || 200;
 /*

@@ -45,6 +45,9 @@ Item {
 			var diffMS = expirationTime - curDate.getTime();
 			if (diffMS <= 0) {
 
+				// Stop to countdown
+				running = false;
+
 				// Timeout
 				timeout();
 				return;
