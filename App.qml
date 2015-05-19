@@ -171,6 +171,23 @@ ApplicationWindow {
 			}
 		]
 
+		transform: Rotation {
+			origin.x: timerPanel.width * 0.5;
+			origin.y: timerPanel.height * 0.5;
+			axis { x: 0; y: 1; z: 0 }
+			angle: 90;
+
+			SequentialAnimation on angle {
+				running: timerPanel.visible;
+
+				NumberAnimation {
+					duration: 5000;
+					easing.type: Easing.OutBack;
+					to: 0;
+				}
+			}
+		}
+
 		function minimize() {
 			timerPanel.state = 'minimize';
 		}
@@ -412,7 +429,7 @@ ApplicationWindow {
 					running: core.visible;
 
 					NumberAnimation {
-						duration: 2000;
+						duration: 5000;
 						easing.type: Easing.OutCubic;
 						to: 0;
 					}
