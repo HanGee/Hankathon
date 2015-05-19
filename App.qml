@@ -24,12 +24,10 @@ ApplicationWindow {
 		Keys.onPressed: {
 			switch(event.key) {
 			case Qt.Key_Left:
-//				timerPanel.state = 'focus';
 				timerPanel.setFocus();
 				break;
 
 			case Qt.Key_Right:
-//				timerPanel.state = 'minimize';
 				timerPanel.anchors.centerIn = undefined;
 				timerPanel.minimize();
 				break;
@@ -70,16 +68,6 @@ ApplicationWindow {
 			radius: 64
 		}
 	}
-/*
-	Text {
-		anchors.centerIn: parent;
-		font.pointSize: 36;
-		font.family: numberFont.name;
-		font.bold: true;
-		color: '#ffffff';
-		text: 'Hackathon Taiwan\n這次將於 3/7、3/8 舉行！\n\n這是現場的倒數計時器程式測試！\nXDDDD';
-	}
-*/
 
 	Logo {
 		id: logo;
@@ -623,272 +611,23 @@ ApplicationWindow {
 			}
 		}
 	}
-/*
-	Social {
-		anchors.fill: parent;		
-	}
-*/
-/*
-	SponsorSlider {
-		anchors.left: parent.left;
-		anchors.right: parent.right;
-		anchors.bottom: parent.bottom;
-		height: 100;
-
-		list: ListModel {
-			ListElement {
-				imagePath: './logo/HanGee.jpg';
-			}
-			ListElement {
-				imagePath: './logo/AvengerGear.jpg';
-			}
-			ListElement {
-				imagePath: './logo/CustardCream.jpg';
-			}
-			ListElement {
-				imagePath: './logo/TaiwanLD.jpg';
-			}
-			ListElement {
-				imagePath: './logo/DOITT.png';
-			}
-		}
-	}
-*/
-/*
-	SponsorSlider {
-		anchors.left: parent.left;
-		anchors.right: parent.right;
-		anchors.bottom: parent.bottom;
-		height: 100;
-
-		list: ListModel {
-			ListElement {
-				imagePath: './logo/netgear.png';
-			}
-			ListElement {
-				imagePath: './logo/vivotek.jpg'
-			}
-			ListElement {
-				imagePath: './logo/pearnature.png'
-			}
-			ListElement {
-				imagePath: './logo/qt.png';
-			}
-		}
-	}
-*/
 
 	signal updatedIRC(var msg);
 
-	Rectangle {
+	IRC {
 		id: irc;
-		color: '#0affffff';
+
+		height: app.height * 0.4;
 		anchors.margins: 10;
 		anchors.bottom: parent.bottom;
 		anchors.left: parent.left;
-		width: 0;
-		height: 50;
-		radius: 10;
-		border.width: 2;
-		border.color: '#20ffffff';
-		opacity: 0;
-
-		layer.enabled: true;
-		layer.effect: Glow {
-			radius: 4;
-			samples: 16;
-			spread: 0.1;
-			cached: true;
-			color: '#33aaff';
-		}
-
-		ListView {
-			id: ircBox;
-			anchors.fill: parent;
-			anchors.margins: 10;
-			model: ListModel {}
-			delegate: Item {
-				height: label.height;
-
-				Text {
-					id: label;
-					width: ircBox.width;
-					color: '#ffffff';	
-					font.pointSize: 10;
-					wrapMode: Text.Wrap;
-					textFormat: Text.RichText;
-					text: msg;
-
-					SequentialAnimation {
-						running: true
-
-						ParallelAnimation {
-
-							NumberAnimation {
-								target: label;
-								property: 'x';
-								duration: 300;
-								easing.type: Easing.OutBack;
-								from: 20;
-								to: 0;
-							}
-
-							NumberAnimation {
-								target: label;
-								property: 'opacity';
-								duration: 300;
-								easing.type: Easing.Linear;
-								from: 0;
-								to: 1;
-							}
-						}
-					}
-				}
-			}
-		}
-
-		SequentialAnimation {
-			running: clock.visible
-
-			ParallelAnimation {
-
-				NumberAnimation {
-					target: irc;
-					property: 'width';
-					duration: 600;
-					easing.type: Easing.OutBack;
-					to: app.height * 0.3;
-				}
-
-				NumberAnimation {
-					target: irc;
-					property: 'opacity';
-					duration: 600;
-					easing.type: Easing.Linear;
-					to: 1;
-				}
-			}
-
-			NumberAnimation {
-				target: irc;
-				property: 'height';
-				duration: 500;
-				easing.type: Easing.OutBack;
-				to: app.height * 0.4;
-			}
-
-			NumberAnimation {
-				target: irc;
-				property: 'width';
-				duration: 600;
-				easing.type: Easing.OutBack;
-				to: app.width * 0.4;
-			}
-
-			ParallelAnimation {
-
-				NumberAnimation {
-					target: ircInfo;
-					property: 'x';
-					duration: 600;
-					easing.type: Easing.OutCubic;
-					from: 200;
-					to: 10;
-				}
-
-				NumberAnimation {
-					target: ircInfo;
-					property: 'opacity';
-					duration: 600;
-					easing.type: Easing.Linear;
-					from: 0;
-					to: 1;
-				}
-
-				NumberAnimation {
-					target: ircBoxLabel;
-					property: 'opacity';
-					duration: 500;
-					easing.type: Easing.OutInBounce;
-					from: 0;
-					to: 1;
-					loops: 1;
-				}
-			}
-		}
-	}
-
-	Item {
-		anchors.left: irc.right;
-		anchors.bottom: irc.bottom;
-
-		Text {
-			id: ircInfo
-			anchors.margins: 10;
-			anchors.bottom: parent.bottom;
-			font.pointSize: 16;
-			font.family: numberFont.name;
-			textFormat: Text.RichText;
-			//color: '#22bbff';
-			//color: '#ffaa22';
-			color: '#ffffff';
-			text: '#HackathonTaiwan @ freenode<br>http://goo.gl/eoGTUZ'
-			opacity: 0;
-
-			layer.enabled: true;
-			layer.effect: Glow {
-				radius: 4;
-				samples: 16;
-				spread: 0.1;
-				cached: true;
-				color: '#33aaff';
-			}
-		}
-
-		Rectangle {
-			id: ircBoxLabel;
-			width: labelText.width + 30; 
-			height: labelText.height + 10; 
-			anchors.bottom: ircInfo.top;
-			anchors.margins: 10;
-			color: '#aaf0ffff';
-			opacity: 0;
-
-			layer.enabled: true;
-			layer.effect: Glow {
-				radius: 3;
-				samples: 16;
-				spread: 0.1;
-				cached: true;
-				color: '#33aaff';
-			}
-
-			Text {
-				anchors.centerIn: parent;
-				id: labelText;
-				font.pointSize: 16;
-				font.family: numberFont.name;
-				textFormat: Text.RichText;
-				color: '#000000';
-				text: '<b>IRC Channel</b>'
-
-				layer.enabled: true;
-				layer.effect: Glow {
-					radius: 3;
-					samples: 16;
-					spread: 0.1;
-					cached: true;
-					color: '#ffffff';
-				}
-			}
-		}
 	}
 
 	onUpdatedIRC: {
 //		ircBox.text = msg;
-		ircBox.model.append({
+		irc.ircTextbox.model.append({
 			msg: msg
 		});
-		ircBox.positionViewAtEnd();
+		irc.ircTextbox.positionViewAtEnd();
 	}
 }
