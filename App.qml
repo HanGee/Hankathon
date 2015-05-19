@@ -254,13 +254,37 @@ ApplicationWindow {
 				}
 			}
 
-			SequentialAnimation on scale {
+			ParallelAnimation {
+				loops: Animation.Infinite;
 				running: core.visible;
 
 				NumberAnimation {
-					duration: 2000;
+					target: centerCircle;
+					property: 'scale';
+					duration: 1000;
 					easing.type: Easing.OutBack;
+					from: 0.9;
 					to: 1;
+				}
+
+				SequentialAnimation {
+
+					NumberAnimation {
+						target: centerCircle;
+						property: 'opacity';
+						duration: 800;
+						easing.type: Easing.OutCubic;
+						from: 0;
+						to: 0.2;
+					}
+
+					NumberAnimation {
+						target: centerCircle;
+						property: 'opacity';
+						duration: 200;
+						easing.type: Easing.OutCubic;
+						to: 0;
+					}
 				}
 			}
 
