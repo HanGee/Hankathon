@@ -11,9 +11,15 @@ Item {
 	property int hourMS: 60 * 60 * 1000;
 	property int minuteMS: 60 * 1000;
 
-	property alias hour: timer.hour;
-	property alias minute: timer.minute;
-	property alias second: timer.second;
+	property string hour: {
+		return String('00' + timer.hour.toString()).slice(-2);
+	}
+	property string minute: {
+		return String('00' + timer.minute.toString()).slice(-2);
+	}
+	property string second: {
+		return String('00' + timer.second.toString()).slice(-2);
+	}
 	property string millisecond: {
 		return String('000' + timer.millisecond.toString()).slice(-3);
 	}
@@ -27,9 +33,9 @@ Item {
 		running: false;
 		repeat: true;
 
-		property var hour: '00';
-		property var minute: '00';
-		property var second: '00';
+		property int hour: 0;
+		property int minute: 0;
+		property int second: 0;
 		property int millisecond: 0;
 
 		onTriggered: {
@@ -46,7 +52,10 @@ Item {
 
 			// Hour
 			var diffHour = Math.floor(diffMS / hourMS);
-			hour = String('00' + parseInt(diffHour).toString()).slice(-2);
+			var _hour = parseInt(diffHour);
+			if (_hour != hour)
+				hour = _hour;
+
 			diffMS -= diffHour * hourMS;
 			if (diffHour <= 0) {
 				// Last hour
@@ -55,12 +64,18 @@ Item {
 
 			// Minute
 			var diffMinute = Math.floor(diffMS / minuteMS);
-			minute = String('00' + parseInt(diffMinute).toString()).slice(-2);
+			var _minute = parseInt(diffSecond);
+			if (_minute != minute)
+				minute = _minute;
+
 			diffMS -= diffMinute * minuteMS;
 
 			// Second
 			var diffSecond = Math.floor(diffMS / 1000);
-			second = String('00' + parseInt(diffSecond).toString()).slice(-2);
+			var _second = parseInt(diffSecond);
+			if (_second != second)
+				second = _second;
+
 			diffMS -= diffSecond * 1000;
 		}
 	}
