@@ -170,7 +170,7 @@ ApplicationWindow {
 				name: 'timesup';
 			}
 		]
-
+/*
 		transform: Rotation {
 			origin.x: timerPanel.width * 0.5;
 			origin.y: timerPanel.height * 0.5;
@@ -187,7 +187,7 @@ ApplicationWindow {
 				}
 			}
 		}
-
+*/
 		function minimize() {
 			timerPanel.state = 'minimize';
 		}

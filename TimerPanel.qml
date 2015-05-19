@@ -11,6 +11,7 @@ Item {
 	Item {
 		id: display;
 		anchors.fill: parent;
+		visible: false;
 /*
 		layer.enabled: true;
 		layer.effect: HueSaturation {
@@ -55,7 +56,7 @@ Item {
 
 				SequentialAnimation on angle {
 					loops: Animation.Infinite
-					running: timerPanel.visible;
+					running: display.visible;
 
 					NumberAnimation {
 						duration: 2000;
@@ -183,10 +184,10 @@ Item {
 			}
 
 			SequentialAnimation on scale {
-				running: timerPanel.visible;
+				running: display.visible;
 
 				NumberAnimation {
-					duration: 600;
+					duration: 3000;
 					easing.type: Easing.OutCubic;
 					from: 0;
 					to: 1.2;
@@ -230,6 +231,9 @@ Item {
 	Item {
 		id: textStyle;
 		anchors.fill: parent;
+		visible: false;
+//		width: parent.width;
+//		height: parent.height;
 
 		property real baseSize: Math.floor(parent.height * 0.2) || 200;
 /*
@@ -242,6 +246,31 @@ Item {
 			cached: true;
 			color: '#33aaff';
 			source: textStyle;
+		}
+*/
+/*
+		transform: Rotation {
+			origin.x: textStyle.width * 0.5;
+			origin.y: textStyle.height * 0.5;
+			axis { x: 0; y: 1; z: 0 }
+			angle: 90;
+
+			SequentialAnimation on angle {
+				running: display.visible;
+
+				NumberAnimation {
+					duration: 3000;
+					easing.type: Easing.OutBack;
+					to: 0;
+				}
+			}
+		}
+
+		NumberAnimation on x {
+			duration: 5000;
+			easing.type: Easing.OutBack;
+			from: -800;
+			to: 0;
 		}
 */
 
@@ -290,6 +319,7 @@ Item {
 			}
 
 			Text {
+				id: secDisplay;
 				anchors.top: hour.bottom;
 				anchors.left: hour.horizontalCenter;
 				anchors.margins: textStyle.baseSize * 0.05;
@@ -300,6 +330,30 @@ Item {
 				horizontalAlignment: Text.AlignHCenter;
 				verticalAlignment: Text.AlignVCenter;
 				text: timer.second;
+
+				onTextChanged: {
+					pumpSec.running = true;
+				}
+
+				SequentialAnimation {
+					id: pumpSec;
+					running: false;
+
+					NumberAnimation {
+						target: secDisplay;
+						property: 'scale';
+						duration: 200;
+						from: 1;
+						to: 1.2;
+					}
+
+					NumberAnimation {
+						target: secDisplay;
+						property: 'scale';
+						duration: 200;
+						to: 1;
+					}
+				}
 			}
 
 			Text {
@@ -316,10 +370,10 @@ Item {
 		}
 
 		SequentialAnimation on scale {
-			running: timerPanel.visible;
+			running: textStyle.visible;
 
 			NumberAnimation {
-				duration: 1000;
+				duration: 800;
 				easing.type: Easing.OutBack;
 				from: 0;
 				to: 1;
@@ -327,10 +381,10 @@ Item {
 		}
 
 		SequentialAnimation on opacity {
-			running: timerPanel.visible;
+			running: textStyle.visible;
 
 			NumberAnimation {
-				duration: 1000;
+				duration: 800;
 				easing.type: Easing.OutCubic;
 				from: 0;
 				to: 1;
@@ -398,6 +452,26 @@ Item {
 		NumberAnimation {
 			duration: 400;
 			easing.type: Easing.OutCubic;
+		}
+	}
+
+	SequentialAnimation {
+		running: timerPanel.visible;
+
+		ScriptAction {
+			script: {
+				display.visible = true;
+			}
+		}
+
+		PauseAnimation {
+			duration: 1000;
+		}
+
+		ScriptAction {
+			script: {
+				textStyle.visible = true;
+			}
 		}
 	}
 
