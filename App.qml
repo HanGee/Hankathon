@@ -17,8 +17,6 @@ ApplicationWindow {
 //	visibility: Window.FullScreen;
 	title: 'Hankathon';
 
-	signal readyForIRC();
-
 	Item {
 		focus: true;
 		Keys.onPressed: {
@@ -184,6 +182,7 @@ ApplicationWindow {
 		}
 	}
 
+	/* Side circle */
 	Item {
 		anchors.fill: parent;
 		visible: core.visible;
@@ -391,7 +390,6 @@ ApplicationWindow {
 		}
 	}
 
-	signal updatedIRC(var msg);
 
 	IRC {
 		id: irc;
@@ -401,6 +399,9 @@ ApplicationWindow {
 		anchors.bottom: parent.bottom;
 		anchors.left: parent.left;
 	}
+
+	signal readyForIRC();
+	signal updatedIRC(var msg);
 
 	onUpdatedIRC: {
 //		ircBox.text = msg;
