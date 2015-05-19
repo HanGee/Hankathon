@@ -256,13 +256,23 @@ ApplicationWindow {
 				loops: Animation.Infinite;
 				running: core.visible;
 
-				NumberAnimation {
-					target: centerCircle;
-					property: 'scale';
-					duration: 1000;
-					easing.type: Easing.OutBack;
-					from: 0.9;
-					to: 1;
+				SequentialAnimation {
+
+					NumberAnimation {
+						target: centerCircle;
+						property: 'scale';
+						duration: 400;
+						easing.type: Easing.OutBack;
+						to: 1;
+					}
+
+					NumberAnimation {
+						target: centerCircle;
+						property: 'scale';
+						duration: 600;
+						easing.type: Easing.OutCubic;
+						to: 0.8;
+					}
 				}
 
 				SequentialAnimation {
@@ -270,18 +280,17 @@ ApplicationWindow {
 					NumberAnimation {
 						target: centerCircle;
 						property: 'opacity';
-						duration: 800;
+						duration: 600;
 						easing.type: Easing.OutCubic;
-						from: 0;
 						to: 0.2;
 					}
 
 					NumberAnimation {
 						target: centerCircle;
 						property: 'opacity';
-						duration: 200;
+						duration: 400;
 						easing.type: Easing.OutCubic;
-						to: 0;
+						to: 0.05;
 					}
 				}
 			}
