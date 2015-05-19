@@ -2,8 +2,10 @@ import QtQuick 2.3
 
 Item {
 
+	id: countdownTimer;
+
 	property alias running: timer.running;
-	property var expiration: '2015-05-13 17:00:00';
+	property var expiration: '2015-05-19 17:00:00';
 	property var expirationDate: new Date(expiration);
 	property var expirationTime: expirationDate.getTime();
 	property int hourMS: 60 * 60 * 1000;
@@ -12,21 +14,23 @@ Item {
 	property alias hour: timer.hour;
 	property alias minute: timer.minute;
 	property alias second: timer.second;
-	property alias millisecond: timer.millisecond;
+	property string millisecond: {
+		return String('000' + timer.millisecond.toString()).slice(-3);
+	}
 
 	signal timeout();
 	signal lastHour();
 
 	Timer {
 		id: timer;
-		interval: 20;
+		interval: 1000;
 		running: false;
 		repeat: true;
 
 		property var hour: '00';
 		property var minute: '00';
 		property var second: '00';
-		property var millisecond: '000';
+		property int millisecond: 0;
 
 		onTriggered: {
 			var curDate = new Date();
@@ -58,9 +62,16 @@ Item {
 			var diffSecond = Math.floor(diffMS / 1000);
 			second = String('00' + parseInt(diffSecond).toString()).slice(-2);
 			diffMS -= diffSecond * 1000;
-
-			// Millisecond
-			millisecond = String('000' + parseInt(diffMS).toString()).slice(-3);
 		}
+	}
+
+	NumberAnimation {
+		running: timer.running;
+		loops: Animation.Infinite;
+		target: timer;
+		property: 'millisecond';
+		duration: 1000;
+		from: 999;
+		to: 0;
 	}
 }
