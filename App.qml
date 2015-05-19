@@ -3,11 +3,9 @@ import QtQuick.Controls 1.2
 import QtQuick.Window 2.1
 import QtGraphicalEffects 1.0
 import QtQuick.Particles 2.0
-//import 'slides/social'
-/*
-import Qt3D 2.0
-import Qt3D.Shapes 2.0
-*/
+//import Qt3D 2.0
+//import Qt3D.Shapes 2.0
+
 ApplicationWindow {
 	id: app;
 	visible: true;
