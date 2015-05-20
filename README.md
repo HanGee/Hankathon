@@ -3,11 +3,13 @@ Hankathon
 
 Don't you have a countdown timer at your hackathon? Just try Hankathon!
 
-Hankathon has a fantastic visual design and rich features which includes:
+It has a fantastic visual design and rich features which includes:
 
-1. Countdown Timer
-2. IRC Chatroom Display System
+1. Clock
+2. Countdown Timer
+3. IRC Chatroom Display System
 
+In the beginning, Hankathon project was designed and used at [Hackathon Taiwan](https://hackathon.tw/), but you can just replace the logo what you like for your event.
 
 Demonstration video that you can click on the image below to play:
 
@@ -25,7 +27,7 @@ $ git submodule init
 $ git submodule update
 ```
 
-Initializing Node.js/io.js modules with NPM:
+Then initializing Node.js/io.js modules with NPM:
 ```
 $ npm install
 ```
@@ -37,6 +39,17 @@ You can just start application with this command:
 ```
 $ node app.js
 ```
+
+Keyboard Shortcuts
+---
+
+This lists keyboard shortcuts that you can use on Hankathon:
+
+* `G` - Start Hankathon
+* `F` - Enter/Exit Fullscreen mode
+
+
+
 
 License
 ---
