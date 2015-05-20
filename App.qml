@@ -348,6 +348,74 @@ ApplicationWindow {
 					}
 				}
 			}
+
+			layer.enabled: true;
+			layer.effect: Glow {
+				radius: 8;
+				samples: 16;
+				spread: 0.5;
+				cached: true;
+				color: '#33aaff';
+			}
+
+			ParallelAnimation {
+				loops: Animation.Infinite;
+				running: core.visible;
+
+				SequentialAnimation {
+
+					NumberAnimation {
+						target: spinner1;
+						property: 'border';
+						duration: 1000;
+						easing.type: Easing.OutBack;
+						to: spinner1.circleSize * 0.12;
+					}
+
+					PauseAnimation {
+						duration: 2000;
+					}
+
+					NumberAnimation {
+						target: spinner1;
+						property: 'border';
+						duration: 1000;
+						easing.type: Easing.OutBack;
+						to: spinner1.circleSize * 0.1;
+					}
+
+					PauseAnimation {
+						duration: 1000;
+					}
+				}
+
+				SequentialAnimation {
+
+					NumberAnimation {
+						target: spinner1;
+						property: 'opacity';
+						duration: 1000;
+						easing.type: Easing.OutBack;
+						to: 0.3;
+					}
+
+					PauseAnimation {
+						duration: 2000;
+					}
+
+					NumberAnimation {
+						target: spinner1;
+						property: 'opacity';
+						duration: 1000;
+						easing.type: Easing.OutBack;
+						to: 0.1;
+					}
+
+					PauseAnimation {
+						duration: 1000;
+					}
+				}
+			}
 		}
 
 		Spinner {
@@ -383,6 +451,43 @@ ApplicationWindow {
 					}
 				}
 			}
+
+			SequentialAnimation {
+				loops: Animation.Infinite;
+				running: core.visible;
+
+				NumberAnimation {
+					target: spinner2;
+					property: 'scale';
+					duration: 1000;
+					easing.type: Easing.OutBack;
+					to: 0.9;
+				}
+
+				NumberAnimation {
+					target: spinner2;
+					property: 'scale';
+					duration: 1600;
+					easing.type: Easing.OutCubic;
+					to: 1;
+				}
+
+				PauseAnimation {
+					duration: 1000;
+				}
+
+				NumberAnimation {
+					target: spinner2;
+					property: 'scale';
+					duration: 600;
+					easing.type: Easing.OutBack;
+					to: 1.4;
+				}
+
+				PauseAnimation {
+					duration: 2000;
+				}
+			}
 		}
 
 		Spinner {
@@ -416,6 +521,43 @@ ApplicationWindow {
 						easing.type: Easing.OutCubic;
 						to: 0;
 					}
+				}
+			}
+
+			SequentialAnimation {
+				loops: Animation.Infinite;
+				running: core.visible;
+
+				NumberAnimation {
+					target: spinner3;
+					property: 'scale';
+					duration: 1000;
+					easing.type: Easing.OutBack;
+					to: 0.9;
+				}
+
+				NumberAnimation {
+					target: spinner3;
+					property: 'scale';
+					duration: 1600;
+					easing.type: Easing.OutCubic;
+					to: 1;
+				}
+
+				PauseAnimation {
+					duration: 1000;
+				}
+
+				NumberAnimation {
+					target: spinner3;
+					property: 'scale';
+					duration: 600;
+					easing.type: Easing.OutBack;
+					to: 1.5;
+				}
+
+				PauseAnimation {
+					duration: 2000;
 				}
 			}
 		}
