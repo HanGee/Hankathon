@@ -1,10 +1,18 @@
 Hankathon
 =========
 
-This probject is used hackathon event, which includes:
+Don't you have a countdown timer at your hackathon? Just try Hankathon!
+
+Hankathon has a fantastic visual design and rich features which includes:
 
 1. Countdown Timer
 2. IRC Chatroom Display System
+
+
+Demonstration video that you can click on the image below to play:
+
+[![Countdown Timer](https://cloud.githubusercontent.com/assets/252072/7604018/44697ee8-f96f-11e4-9690-db826fccbc22.png)](http://www.youtube.com/watch?v=D6CnZfK723M)
+(clicks to play video)
 
 Installation
 ---
