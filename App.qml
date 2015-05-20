@@ -170,24 +170,7 @@ ApplicationWindow {
 				name: 'timesup';
 			}
 		]
-/*
-		transform: Rotation {
-			origin.x: timerPanel.width * 0.5;
-			origin.y: timerPanel.height * 0.5;
-			axis { x: 0; y: 1; z: 0 }
-			angle: 90;
 
-			SequentialAnimation on angle {
-				running: timerPanel.visible;
-
-				NumberAnimation {
-					duration: 5000;
-					easing.type: Easing.OutBack;
-					to: 0;
-				}
-			}
-		}
-*/
 		function minimize() {
 			timerPanel.state = 'minimize';
 		}
@@ -286,7 +269,7 @@ ApplicationWindow {
 					NumberAnimation {
 						target: centerCircle;
 						property: 'scale';
-						duration: 600;
+						duration: 1600;
 						easing.type: Easing.OutCubic;
 						to: 0.8;
 					}
@@ -305,7 +288,7 @@ ApplicationWindow {
 					NumberAnimation {
 						target: centerCircle;
 						property: 'opacity';
-						duration: 400;
+						duration: 1400;
 						easing.type: Easing.OutCubic;
 						to: 0.05;
 					}
