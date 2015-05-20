@@ -240,7 +240,7 @@ Item {
 	}
 
 	Timer {
-		interval: 2000;
+		interval: 1500;
 		running: clock.visible;
 		repeat: false;
 		onTriggered: {
