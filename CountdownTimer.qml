@@ -67,7 +67,7 @@ Item {
 
 			// Minute
 			var diffMinute = Math.floor(diffMS / minuteMS);
-			var _minute = parseInt(diffSecond);
+			var _minute = parseInt(diffMinute);
 			if (_minute != minute)
 				minute = _minute;
 
