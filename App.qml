@@ -38,6 +38,10 @@ ApplicationWindow {
 			case Qt.Key_G:
 				logo.visible = true;
 				break;
+
+			case Qt.Key_Q:
+				Qt.quit()
+				break;
 			}
 		}
 	}
