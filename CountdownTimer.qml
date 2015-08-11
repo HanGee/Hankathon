@@ -49,6 +49,11 @@ Item {
 				running = false;
 
 				// Timeout
+				hour = 0;
+				minute = 0;
+				second = 0;
+				millisecond = 0;
+
 				timeout();
 				return;
 			}
@@ -67,7 +72,7 @@ Item {
 
 			// Minute
 			var diffMinute = Math.floor(diffMS / minuteMS);
-			var _minute = parseInt(diffSecond);
+			var _minute = parseInt(diffMinute);
 			if (_minute != minute)
 				minute = _minute;
 
