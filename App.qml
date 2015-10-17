@@ -86,7 +86,36 @@ ApplicationWindow {
 			onTriggered: {
 				clock.visible = true;
 				app.readyForIRC();
+				letSchool.visible = true;
+				shenZhen.visible = true;
 			}
+		}
+	}
+
+	OtherLogo {
+		id: shenZhen;
+		anchors.topMargin: 40;
+		anchors.top: logo.bottom;
+		anchors.right: parent.right;
+		width: parent.width * 0.15;
+		height: parent.height * 0.15;
+		source: 'logo/shenzhen.png';
+		visible: false;
+
+		onFinished: {
+		}
+	}
+
+	OtherLogo {
+		id: letSchool;
+		anchors.top: shenZhen.bottom;
+		anchors.right: parent.right;
+		width: parent.width * 0.15;
+		height: parent.height * 0.15;
+		source: 'logo/letschool.png';
+		visible: false;
+
+		onFinished: {
 		}
 	}
 
